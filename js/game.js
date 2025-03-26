@@ -1,11 +1,10 @@
 let canvas;
 let ctx;
-let world = new World();
+let world;
 
 function init() {
-  canvas = document.getElementById('canvas');
-  ctx = canvas.getContext('2d')
+  canvas = document.getElementById("canvas");
+  world = new World(canvas);
 
-  console.log('My Chracter is', world.character);
-  
+  console.log("My Chracter is", world.character);
 }
