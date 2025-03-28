@@ -3,8 +3,10 @@ class Character extends MoveableObject{
   x = 0;
   height = 200;
   y = 110;
+  world;
+  speed = 1;
 
-  IMAGES_SWIMMING = [
+  IMAGES_STAND = [
     '../img/1.Sharkie/1.IDLE/1.png',
     '../img/1.Sharkie/1.IDLE/2.png',
     '../img/1.Sharkie/1.IDLE/3.png',
@@ -25,16 +27,43 @@ class Character extends MoveableObject{
     '../img/1.Sharkie/1.IDLE/18.png'
   ];
 
+  IMAGES_SWIMMING = [
+    '../img/1.Sharkie/3.Swim/1.png',
+    '../img/1.Sharkie/3.Swim/2.png',
+    '../img/1.Sharkie/3.Swim/3.png',
+    '../img/1.Sharkie/3.Swim/4.png',
+    '../img/1.Sharkie/3.Swim/5.png',
+    '../img/1.Sharkie/3.Swim/6.png'
+  ];
   constructor() {
     super().loadImage('../img/1.Sharkie/1.IDLE/1.png');
+    this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
     this.animate();
   }
 
   animate() {
     setInterval(() => {
-      let index = this.currentImage % this.IMAGES_SWIMMING.length; 
-      let path = this.IMAGES_SWIMMING[index];
+      if (this.world.keyboard.RIGHT) {
+        this.x += this.speed;
+      }
+      if (this.world.keyboard.LEFT) {
+        this.x -= this.speed;
+      }
+    }, 1000 / 60);
+
+    setInterval(() => {
+      // swimm animation
+      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        let index = this.currentImage % this.IMAGES_SWIMMING.length; 
+        let path = this.IMAGES_SWIMMING[index];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+        return
+      }
+      // stand animation
+      let index = this.currentImage % this.IMAGES_STAND.length; 
+      let path = this.IMAGES_STAND[index];
       this.img = this.imageCache[path];
       this.currentImage++;
     }, 100);
