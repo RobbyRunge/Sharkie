@@ -12,11 +12,11 @@ class World {
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
-  }
+  };
 
   setWorld() {
     this.character.world = this;
-  }
+  };
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -34,13 +34,13 @@ class World {
     requestAnimationFrame(function() {
       self.draw();
     });
-  }
+  };
 
   addObjectsToMap(objects) {
     objects.forEach(o => {
       this.addToMap(o);
     });
-  }
+  };
 
   addToMap(moveableObject) {
     if (moveableObject.otherDirection) {
@@ -54,5 +54,5 @@ class World {
       moveableObject.x = moveableObject.x * -1;
       this.ctx.restore();
     }
-  }
-}
+  };
+};

@@ -22,6 +22,20 @@ class MoveableObject {
     });
   }
 
+  playAnimationSwimming(images) {
+    let index = this.currentImage % this.IMAGES_SWIMMING.length; 
+    let path = images[index];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
+
+  playAnimationStand(images) {
+      let index = this.currentImage % this.IMAGES_STAND.length; 
+      let path = images[index];
+      this.img = this.imageCache[path];
+      this.currentImage++;
+  }
+
   moveRight() {
     console.log("Moving Right");
   }

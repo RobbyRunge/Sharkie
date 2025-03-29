@@ -2,7 +2,8 @@ const level_1 = new Level(
   [
     new Fish(), 
     new Fish(), 
-    new Fish()
+    new Fish(),
+    new Endboss()
   ],
   [
     new BackgroundObject("../img/3. Background/Layers/5. Water/L2.png", -720),

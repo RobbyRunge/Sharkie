@@ -56,19 +56,11 @@ class Character extends MoveableObject{
     }, 1000 / 160);
 
     setInterval(() => {
-      // swimm animation
       if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        let index = this.currentImage % this.IMAGES_SWIMMING.length; 
-        let path = this.IMAGES_SWIMMING[index];
-        this.img = this.imageCache[path];
-        this.currentImage++;
-        return
+        this.playAnimationSwimming(this.IMAGES_SWIMMING);
+      } else {
+        this.playAnimationStand(this.IMAGES_STAND);
       }
-      // stand animation
-      let index = this.currentImage % this.IMAGES_STAND.length; 
-      let path = this.IMAGES_STAND[index];
-      this.img = this.imageCache[path];
-      this.currentImage++;
     }, 100);
   };
 
