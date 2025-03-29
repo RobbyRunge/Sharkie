@@ -1,20 +1,11 @@
 class World {
   character = new Character();
-  enemies = [
-    new Fish(), 
-    new Fish(), 
-    new Fish()
-  ];
-  backgroundObject = [
-    new BackgroundObject("../img/3. Background/Layers/5. Water/L1.png", 0),
-    new BackgroundObject("../img/3. Background/Layers/4.Fondo 2/L1.png", 0),
-    new BackgroundObject("../img/3. Background/Layers/3.Fondo 1/D1.png", 0),
-    new BackgroundObject("../img/3. Background/Layers/2. Floor/L1.png", 0),
-    new BackgroundObject("../img/3. Background/Layers/1. Light/1.png", 0),
-  ];
+  enemies = level_1.enemies;
+  backgroundObject = level_1.backgroundObject;
   canvas;
   ctx;
   keyboard;
+  camera_x = 0;
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -30,11 +21,14 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.translate(this.camera_x, 0);
     
     this.addObjectsToMap(this.backgroundObject);
     this.addToMap(this.character);
     this.addObjectsToMap(this.enemies);
     
+    this.ctx.translate(-this.camera_x, 0);
 
     // Draw() wird immer wieder aufgerufen
     let self = this;
