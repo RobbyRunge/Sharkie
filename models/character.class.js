@@ -36,7 +36,7 @@ class Character extends MoveableObject{
     '../img/1.Sharkie/3.Swim/6.png'
   ];
   constructor() {
-    super().loadImage('../img/1.Sharkie/1.IDLE/1.png');
+    super().loadImage(this.IMAGES_STAND[0]);
     this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
     this.animate();
