@@ -1,9 +1,11 @@
 class Endboss extends MoveableObject {
+  // Final boss enemy
   height = 400;
   y = -40;
   width = 250;
 
   IMAGES_STAND = [
+    // Floating animation frames
     './img/2.Enemy/3.Final_Enemy/2.floating/1.png',
     './img/2.Enemy/3.Final_Enemy/2.floating/2.png',
     './img/2.Enemy/3.Final_Enemy/2.floating/3.png',
@@ -20,6 +22,7 @@ class Endboss extends MoveableObject {
   ];
 
   constructor() {
+    // Initialize position and animations
     super().loadImage(this.IMAGES_STAND[0]);
     this.loadImages(this.IMAGES_STAND);
     this.x = 700;
@@ -27,6 +30,7 @@ class Endboss extends MoveableObject {
   }
 
   animate() {
+    // Play floating animation
     setInterval(() => {
       this.playAnimationStand(this.IMAGES_STAND);
     }, 120);

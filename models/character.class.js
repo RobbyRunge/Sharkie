@@ -1,12 +1,15 @@
 class Character extends MoveableObject{
+  // Player character with controls and animations
+  
   width = 200;
   x = 0;
   height = 200;
-  y = 110;
+  y = 0;
   world;
   speed = 1;
 
   IMAGES_STAND = [
+    // Standing/idle animation frames
     './img/1.Sharkie/1.IDLE/1.png',
     './img/1.Sharkie/1.IDLE/2.png',
     './img/1.Sharkie/1.IDLE/3.png',
@@ -28,6 +31,7 @@ class Character extends MoveableObject{
   ];
 
   IMAGES_SWIMMING = [
+    // Swimming animation frames
     './img/1.Sharkie/3.Swim/1.png',
     './img/1.Sharkie/3.Swim/2.png',
     './img/1.Sharkie/3.Swim/3.png',
@@ -35,14 +39,20 @@ class Character extends MoveableObject{
     './img/1.Sharkie/3.Swim/5.png',
     './img/1.Sharkie/3.Swim/6.png'
   ];
+  
   constructor() {
+    // Initialize character, load animations, apply gravity
     super().loadImage(this.IMAGES_STAND[0]);
     this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
+    this.applyGravity();
     this.animate();
   }
 
   animate() {
+    // Handle character movement based on keyboard input
+    // Update camera position to follow character
+    // Switch between animations based on movement state
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
         this.x += this.speed;
@@ -65,6 +75,6 @@ class Character extends MoveableObject{
   };
 
   jump() {
-
+    // Jump functionality (currently empty)
   }
 }

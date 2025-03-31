@@ -1,11 +1,14 @@
 const level_1 = new Level(
   [
+    // Array of enemies (fish and endboss)
     new Fish(), 
     new Fish(), 
     new Fish(),
     new Endboss()
   ],
   [
+    // Array of background objects creating parallax layers
+    // Multiple layers repeated at different x positions for continuous background
     new BackgroundObject("./img/3.Background/Layers/5. Water/L2.png", -720),
     new BackgroundObject("./img/3.Background/Layers/4.Fondo 2/L2.png", -720),
     new BackgroundObject("./img/3.Background/Layers/3.Fondo 1/D2.png", -720),

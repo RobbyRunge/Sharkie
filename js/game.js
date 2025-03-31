@@ -1,12 +1,14 @@
-let canvas;
-let world;
-let keyboard = new Keyboard();
+let canvas; // Main canvas element
+let world; // Game world object
+let keyboard = new Keyboard(); // Input handler
 
 function init() {
+  // Initialize game by creating world with canvas and keyboard
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
 }
 
+// Event listeners for keydown events - set corresponding keyboard properties to true
 window.addEventListener('keydown', (event => {
   if(event.code == 'ArrowLeft') {
     keyboard.LEFT = true;
@@ -25,6 +27,7 @@ window.addEventListener('keydown', (event => {
   }
 }));
 
+// Event listeners for keyup events - set corresponding keyboard properties to false
 window.addEventListener('keyup', (event => {
   if(event.code == 'ArrowLeft') {
     keyboard.LEFT = false;
