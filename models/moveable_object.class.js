@@ -9,22 +9,6 @@ class MoveableObject {
   imageCache = {}; // Storage for preloaded images
   currentImage = 0; // Current animation frame
   otherDirection = false; // Direction flag for flipping images
-  speedY = 0.1; // Vertical movement speed
-  acceleration = 0.01; // Gravity acceleration
-
-  applyGravity() {
-    // Apply gravity effect to object
-    setInterval(() => {
-      if (this.isAbobeGround()) {
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration;
-      }
-    }, 1000 / 25);
-  }
-
-  isAbobeGround() {
-    return this.y < 315;
-  }
 
   loadImage(path) {
     // Load a single image
@@ -56,6 +40,14 @@ class MoveableObject {
     this.img = this.imageCache[path];
     this.currentImage++;
   }
+
+  // playAnimationSleep(images) {
+  //   // Play sleeping animation sequence
+  //   let index = this.currentImage % this.IMAGES_SLEEP.length; 
+  //   let path = images[index];
+  //   this.img = this.imageCache[path];
+  //   this.currentImage++;
+  // }
 
   moveRight() {
     // Move object right
