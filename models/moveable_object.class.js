@@ -30,11 +30,13 @@ class MoveableObject {
   }
 
   drawFrame(ctx, x = this.x, y = this.y) {
-    ctx.beginPath();
-    ctx.lineWidth = "1";
-    ctx.strokeStyle = "red";
-    ctx.rect(x, y, this.width, this.height);
-    ctx.stroke();
+    if (this instanceof Character || this instanceof Fish || this instanceof Endboss) {
+      ctx.beginPath();
+      ctx.lineWidth = "1";
+      ctx.strokeStyle = "red";
+      ctx.rect(x, y, this.width, this.height);
+      ctx.stroke();
+    }
   }
 
   playAnimationSwimming(images) {
