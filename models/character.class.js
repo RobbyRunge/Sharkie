@@ -1,12 +1,12 @@
-class Character extends MoveableObject{
+class Character extends MoveableObject {
   // Player character with controls and animations
-  
   width = 200;
   x = 0;
   height = 200;
   y = 100;
   world;
   speed = 1;
+  rotation = 0; // Track current rotation angle in degrees
 
   IMAGES_STAND = [
     // Standing/idle animation frames
@@ -82,22 +82,55 @@ class Character extends MoveableObject{
         this.playAnimationStand(this.IMAGES_STAND);
       }
     }, 100);
-  };
+  }
 
   controlCharacter() {
+    this.handleHorizontalMovement();
+    this.handleVerticalMovement();
+    this.updateRotation();
+  }
+
+  handleHorizontalMovement() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-      this.x += this.speed;
-      this.otherDirection = false;
+      this.moveRight();
     }
     if (this.world.keyboard.LEFT && this.x > 0) {
-      this.x -= this.speed;
-      this.otherDirection = true;
+      this.moveLeft();
     }
+  }
+
+  moveRight() {
+    this.x += this.speed;
+    this.otherDirection = false;
+  }
+
+  moveLeft() {
+    this.x -= this.speed;
+    this.otherDirection = true;
+  }
+
+  handleVerticalMovement() {
     if (this.world.keyboard.UP && this.y > -90) {
-      this.y -= this.speed;
+      this.moveUp();
     }
     if (this.world.keyboard.DOWN && this.y < 320) {
-      this.y += this.speed;
+      this.moveDown();
+    }
+  }
+
+  moveUp() {
+    this.y -= this.speed;
+    this.rotation = -10;
+  }
+
+  moveDown() {
+    this.y += this.speed;
+    this.rotation = 20;
+  }
+
+  updateRotation() {
+    if (!this.world.keyboard.UP && !this.world.keyboard.DOWN) {
+      this.rotation = 0;
     }
   }
 }

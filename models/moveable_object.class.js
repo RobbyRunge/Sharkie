@@ -25,15 +25,15 @@ class MoveableObject {
     });
   }
 
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height)
+  draw(ctx, x = this.x, y = this.y) {
+    ctx.drawImage(this.img, x, y, this.width, this.height);
   }
 
-  drawFrame(ctx) {
+  drawFrame(ctx, x = this.x, y = this.y) {
     ctx.beginPath();
     ctx.lineWidth = "1";
     ctx.strokeStyle = "red";
-    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.rect(x, y, this.width, this.height);
     ctx.stroke();
   }
 

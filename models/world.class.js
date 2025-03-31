@@ -25,15 +25,11 @@ class World {
     // Main render loop - clear canvas, apply camera transform, draw objects
     // Uses requestAnimationFrame for smooth animation
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
-    
     this.addObjectsToMap(this.level.backgroundObject);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.enemies);
-    
     this.ctx.translate(-this.camera_x, 0);
-
     // Draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function() {
@@ -49,25 +45,73 @@ class World {
   }
 
   addToMap(moveableObject) {
-    // Draw single object to canvas with direction handling
-    if (moveableObject.otherDirection) {
-      this.flipImage(moveableObject)
+    this.ctx.save();    
+    
+    if (moveableObject instanceof Character) {
+      this.drawRotatedObject(moveableObject);
+    } else {
+      this.drawObject(moveableObject);
     }
-    moveableObject.draw(this.ctx)
-    moveableObject.drawFrame(this.ctx)
+    
+    this.ctx.restore();
+  }
+
+  drawRotatedObject(moveableObject) {
+    this.moveToObjectCenter(moveableObject);
+    this.applyDirectionAndRotation(moveableObject);
+    this.moveToObjectTopLeft(moveableObject);
+    this.drawObjectAtOrigin(moveableObject);
+  }
+
+  moveToObjectCenter(moveableObject) {
+    this.ctx.translate(
+      moveableObject.x + moveableObject.width/2, 
+      moveableObject.y + moveableObject.height/2
+    );
+  }
+
+  applyDirectionAndRotation(moveableObject) {
     if (moveableObject.otherDirection) {
-      this.flipImageBack(moveableObject)
+      this.ctx.scale(-1, 1);
+    }
+    this.ctx.rotate(moveableObject.rotation * Math.PI / 180);
+  }
+
+  moveToObjectTopLeft(moveableObject) {
+    this.ctx.translate(
+      -(moveableObject.width/2), 
+      -(moveableObject.height/2)
+    );
+  }
+
+  drawObjectAtOrigin(moveableObject) {
+    moveableObject.draw(this.ctx, 0, 0);
+    moveableObject.drawFrame(this.ctx, 0, 0);
+  }
+
+  drawObject(moveableObject) {
+    if (moveableObject.otherDirection) {
+      this.flipImageHorizontally(moveableObject);
+    }
+    this.drawAndFrameObject(moveableObject);
+    if (moveableObject.otherDirection) {
+      this.restoreOriginalDirection(moveableObject);
     }
   }
 
-  flipImage(moveableObject) {
+  flipImageHorizontally(moveableObject) {
     this.ctx.save();
     this.ctx.translate(moveableObject.width, 0);
     this.ctx.scale(-1, 1);
     moveableObject.x = moveableObject.x * -1;
   }
 
-  flipImageBack(moveableObject) {
+  drawAndFrameObject(moveableObject) {
+    moveableObject.draw(this.ctx);
+    moveableObject.drawFrame(this.ctx);
+  }
+
+  restoreOriginalDirection(moveableObject) {
     moveableObject.x = moveableObject.x * -1;
     this.ctx.restore();
   }
