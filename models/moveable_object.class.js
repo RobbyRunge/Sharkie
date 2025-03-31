@@ -54,7 +54,7 @@ class MoveableObject {
     console.log("Moving Right");
   }
 
-  moverLeft() {
+  moveLeft() {
     // Move object left continuously
     setInterval(() => {
       this.x -= this.speed;
