@@ -59,11 +59,10 @@ class Character extends MoveableObject{
   // ]
   
   constructor() {
-    // Initialize character, load animations, apply gravity
+    // Initialize character, load animations
     super().loadImage(this.IMAGES_STAND[0]);
     this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
-    // this.applyGravity();
     this.animate();
   }
 
