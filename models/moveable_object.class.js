@@ -39,6 +39,14 @@ class MoveableObject {
     }
   }
 
+  // character is colliding chicken
+  isColliding (moveableObject) {
+    return  this.x + this.width > moveableObject.x &&
+            this.y + this.height > moveableObject.y &&
+            this.x < moveableObject.x &&
+            this.y < moveableObject.y + moveableObject.height;
+  }
+
   playAnimationSwimming(images) {
     // Play swimming animation sequence
     let index = this.currentImage % this.IMAGES_SWIMMING.length; 
