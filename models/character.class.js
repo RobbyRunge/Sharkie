@@ -59,10 +59,13 @@ class Character extends MoveableObject {
   // ]
   
   constructor() {
-    // Initialize character, load animations
     super().loadImage(this.IMAGES_STAND[0]);
     this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
+    this.offsetTop = 95;
+    this.offsetBottom = 45;
+    this.offsetX = 40;
+    this.offsetY = 40; 
     this.animate();
   }
 
