@@ -69,6 +69,7 @@ class MoveableObject {
   }
 
   hit() {
+    this.playAnimation(this.IMAGES_HIT);
     this.energy -= 5;
     if (this.energy < 0) {
       this.energy = 0

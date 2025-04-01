@@ -9,15 +9,20 @@ class Character extends MoveableObject {
   rotation = 0; // Track current rotation angle in degrees
   idleTime = 0;
   isInSleepMode = false;
+  isHit = false;
+  hitTime = 0;
+  hitDuration = 100; // Duration of hit animation in ms
   animationSpeed = {
     swimming: 100,
     standing: 150,
-    sleeping: 300
+    sleeping: 300,
+    hit: 100 // Add hit animation speed
   };
   lastAnimationUpdate = {
     swimming: 0,
     standing: 0,
-    sleeping: 0
+    sleeping: 0,
+    hit: 0 // Add hit animation timestamp
   };
 
   IMAGES_STAND = [
@@ -68,21 +73,30 @@ class Character extends MoveableObject {
     './img/1.Sharkie/2.Long_IDLE/I12.png',
     './img/1.Sharkie/2.Long_IDLE/I13.png',
     './img/1.Sharkie/2.Long_IDLE/I14.png'
-  ]
+  ];
+
+  IMAGES_HIT = [
+    // Hit animation frames
+    './img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
+    './img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
+    './img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
+    './img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
+  ];
 
   IMAGES_DEAD = [
-    'img/1.Sharkie/6.dead/1.Poisoned/1.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/2.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/3.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/4.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/5.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/6.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/7.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/8.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/9.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/10.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/11.png',
-    'img/1.Sharkie/6.dead/1.Poisoned/12.png',
+    // Dead animation frames
+    './img/1.Sharkie/6.dead/1.Poisoned/1.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/2.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/3.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/4.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/5.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/6.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/7.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/8.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/9.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/10.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/11.png',
+    './img/1.Sharkie/6.dead/1.Poisoned/12.png',
   ];
   
   constructor() {
@@ -90,6 +104,7 @@ class Character extends MoveableObject {
     this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
     this.loadImages(this.IMAGES_SLEEP);
+    this.loadImages(this.IMAGES_HIT);
     this.loadImages(this.IMAGES_DEAD);
     this.offsetTop = 95;
     this.offsetBottom = 45;
@@ -119,6 +134,8 @@ class Character extends MoveableObject {
       const now = new Date().getTime();
       if (this.isDead()) {
         this.handleDeadAnimation();
+      } else if (this.isHit) {
+        this.handleHitAnimation(now);
       } else if (this.isMoving()) {
         this.handleMovementAnimation(now);
       } else {
@@ -136,6 +153,18 @@ class Character extends MoveableObject {
 
   handleDeadAnimation() {
     this.playAnimation(this.IMAGES_DEAD);
+  }
+
+  handleHitAnimation(now) {
+    if (now - this.lastAnimationUpdate.hit >= this.animationSpeed.hit) {
+      this.playAnimation(this.IMAGES_HIT);
+      this.lastAnimationUpdate.hit = now;
+      this.hitTime += 100;
+      if (this.hitTime >= this.hitDuration) {
+        this.isHit = false;
+        this.hitTime = 0;
+      }
+    }
   }
 
   handleMovementAnimation(now) {
@@ -230,6 +259,14 @@ class Character extends MoveableObject {
   updateRotation() {
     if (!this.world.keyboard.UP && !this.world.keyboard.DOWN) {
       this.rotation = 0;
+    }
+  }
+
+  hit() {
+    if (!this.isDead() && !this.isHit) {
+      this.isHit = true;
+      this.hitTime = 0;
+      super.hit();
     }
   }
 }
