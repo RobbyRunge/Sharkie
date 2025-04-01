@@ -1,13 +1,6 @@
-class MoveableObject {
+class MoveableObject extends DrawableObject {
   // Base class for all movable game entities
-  x = 120; // Default horizontal position
-  y = 200; // Default vertical position
-  img; // Image object
-  height = 100; // Default height
-  width = 100; // Default width
   speed = 0.15; // Default movement speed
-  imageCache = {}; // Storage for preloaded images
-  currentImage = 0; // Current animation frame
   otherDirection = false; // Direction flag for flipping images
   // Replace symmetric offsets with directional offsets
   offsetX = 0;
@@ -17,25 +10,6 @@ class MoveableObject {
   offsetLeft = 0;
   offsetRight = 0;
   energy = 100;
-
-  loadImage(path) {
-    // Load a single image
-    this.img = new Image();
-    this.img.src = path;
-  }
-
-  loadImages(array) {
-    // Preload multiple images for animations
-    array.forEach((path) => {
-      let img = new Image();
-      img.src = path;
-      this.imageCache[path] = img;
-    });
-  }
-
-  draw(ctx, x = this.x, y = this.y) {
-    ctx.drawImage(this.img, x, y, this.width, this.height);
-  }
 
   drawFrame(ctx, x = this.x, y = this.y) {
     if (this instanceof Character || this instanceof Fish || this instanceof Endboss) {
