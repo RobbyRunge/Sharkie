@@ -56,7 +56,7 @@ class MoveableObject {
     }
   }
 
-  // character is colliding chicken
+  // Detects collision between two moveable objects using their offset boundaries
   isColliding(moveableObject) {
     const leftOffset = this.offsetLeft || this.offsetX;
     const rightOffset = this.offsetRight || this.offsetX;
