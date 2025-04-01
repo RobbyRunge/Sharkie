@@ -6,6 +6,7 @@ class World {
   ctx; // Canvas 2D context
   keyboard; // Keyboard input reference
   camera_x = 0; // Camera horizontal position
+  statusBar =  new StatusBar();
 
   constructor(canvas, keyboard) {
     // Initialize world with canvas and input
@@ -40,6 +41,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
     this.addToMap(this.character);
+    this.addToMap(this.statusBar);
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.camera_x, 0);
     // Draw() wird immer wieder aufgerufen

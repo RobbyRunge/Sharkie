@@ -25,4 +25,23 @@ class DrawableObject {
   draw(ctx, x = this.x, y = this.y) {
     ctx.drawImage(this.img, x, y, this.width, this.height);
   }
+
+  drawFrame(ctx, x = this.x, y = this.y) {
+    if (this instanceof Character || this instanceof Fish || this instanceof Endboss) {
+      const leftOffset = this.offsetLeft || this.offsetX;
+      const rightOffset = this.offsetRight || this.offsetX;
+      const topOffset = this.offsetTop || this.offsetY;
+      const bottomOffset = this.offsetBottom || this.offsetY;
+      ctx.beginPath();
+      ctx.lineWidth = "0.5";
+      ctx.strokeStyle = "red";
+      ctx.rect(
+        x + leftOffset,
+        y + topOffset,
+        this.width - leftOffset - rightOffset,
+        this.height - topOffset - bottomOffset
+      );
+      ctx.stroke();
+    }
+  }
 }
