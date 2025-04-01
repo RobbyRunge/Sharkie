@@ -7,6 +7,18 @@ class Character extends MoveableObject {
   world;
   speed = 1;
   rotation = 0; // Track current rotation angle in degrees
+  idleTime = 0;
+  isInSleepMode = false;
+  animationSpeed = {
+    swimming: 100,
+    standing: 150,
+    sleeping: 300
+  };
+  lastAnimationUpdate = {
+    swimming: 0,
+    standing: 0,
+    sleeping: 0
+  };
 
   IMAGES_STAND = [
     // Standing/idle animation frames
@@ -40,28 +52,45 @@ class Character extends MoveableObject {
     './img/1.Sharkie/3.Swim/6.png'
   ];
 
-  // IMAGES_SLEEP = [
-  //   // Sleeping animation frames
-  //   './img/1.Sharkie/2.Long_IDLE/i1.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I2.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I3.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I4.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I5.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I6.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I7.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I8.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I9.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I10.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I11.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I12.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I13.png',
-  //   './img/1.Sharkie/2.Long_IDLE/I14.png'
-  // ]
+  IMAGES_SLEEP = [
+    // Sleeping animation frames
+    './img/1.Sharkie/2.Long_IDLE/i1.png',
+    './img/1.Sharkie/2.Long_IDLE/I2.png',
+    './img/1.Sharkie/2.Long_IDLE/I3.png',
+    './img/1.Sharkie/2.Long_IDLE/I4.png',
+    './img/1.Sharkie/2.Long_IDLE/I5.png',
+    './img/1.Sharkie/2.Long_IDLE/I6.png',
+    './img/1.Sharkie/2.Long_IDLE/I7.png',
+    './img/1.Sharkie/2.Long_IDLE/I8.png',
+    './img/1.Sharkie/2.Long_IDLE/I9.png',
+    './img/1.Sharkie/2.Long_IDLE/I10.png',
+    './img/1.Sharkie/2.Long_IDLE/I11.png',
+    './img/1.Sharkie/2.Long_IDLE/I12.png',
+    './img/1.Sharkie/2.Long_IDLE/I13.png',
+    './img/1.Sharkie/2.Long_IDLE/I14.png'
+  ]
+
+  IMAGES_DEAD = [
+    'img/1.Sharkie/6.dead/1.Poisoned/1.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/2.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/3.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/4.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/5.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/6.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/7.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/8.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/9.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/10.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/11.png',
+    'img/1.Sharkie/6.dead/1.Poisoned/12.png',
+  ];
   
   constructor() {
     super().loadImage(this.IMAGES_STAND[0]);
     this.loadImages(this.IMAGES_STAND);
     this.loadImages(this.IMAGES_SWIMMING);
+    this.loadImages(this.IMAGES_SLEEP);
+    this.loadImages(this.IMAGES_DEAD);
     this.offsetTop = 95;
     this.offsetBottom = 45;
     this.offsetX = 40;
@@ -70,21 +99,88 @@ class Character extends MoveableObject {
   }
 
   animate() {
-    // Handle character movement based on keyboard input
-    // Update camera position to follow character
-    // Switch between animations based on movement state
+    this.setupControlLoop();
+    this.setupAnimationLoop();
+  }
+
+  setupControlLoop() {
     setInterval(() => {
       this.controlCharacter();
-      this.world.camera_x = -this.x + 100;
+      this.updateCamera();
     }, 1000 / 160);
+  }
 
+  updateCamera() {
+    this.world.camera_x = -this.x + 100;
+  }
+
+  setupAnimationLoop() {
     setInterval(() => {
-      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-        this.playAnimationSwimming(this.IMAGES_SWIMMING);
+      const now = new Date().getTime();
+      if (this.isDead()) {
+        this.handleDeadAnimation();
+      } else if (this.isMoving()) {
+        this.handleMovementAnimation(now);
       } else {
-        this.playAnimationStand(this.IMAGES_STAND);
+        this.handleIdleAnimation(now);
       }
     }, 100);
+  }
+
+  isMoving() {
+    return this.world.keyboard.RIGHT || 
+           this.world.keyboard.LEFT || 
+           this.world.keyboard.UP || 
+           this.world.keyboard.DOWN;
+  }
+
+  handleDeadAnimation() {
+    this.playAnimation(this.IMAGES_DEAD);
+  }
+
+  handleMovementAnimation(now) {
+    // Reset idle time when moving
+    this.idleTime = 0;
+    this.isInSleepMode = false;
+    // Update swimming animation at swimming speed
+    if (now - this.lastAnimationUpdate.swimming >= this.animationSpeed.swimming) {
+      this.playAnimation(this.IMAGES_SWIMMING);
+      this.lastAnimationUpdate.swimming = now;
+    }
+  }
+
+  handleIdleAnimation(now) {
+    // Character is idle
+    this.updateIdleState();
+    if (this.isInSleepMode) {
+      this.playSlowSleepAnimation(now);
+    } else {
+      this.playStandingAnimation(now);
+    }
+  }
+
+  updateIdleState() {
+    this.idleTime += 100; // Add 100ms to idle time
+    if (this.idleTime > 5000 && !this.isInSleepMode) {
+      // After 5 seconds of idle time, start sleep animation
+      this.isInSleepMode = true;
+    }
+  }
+
+  playSlowSleepAnimation(now) {
+    // Update sleep animation at sleeping speed
+    if (now - this.lastAnimationUpdate.sleeping >= this.animationSpeed.sleeping) {
+      this.playAnimation(this.IMAGES_SLEEP);
+      this.lastAnimationUpdate.sleeping = now;
+    }
+  }
+
+  playStandingAnimation(now) {
+    // Update standing animation at standing speed
+    if (now - this.lastAnimationUpdate.standing >= this.animationSpeed.standing) {
+      this.playAnimation(this.IMAGES_STAND);
+      this.lastAnimationUpdate.standing = now;
+    }
   }
 
   controlCharacter() {

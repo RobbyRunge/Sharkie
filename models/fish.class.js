@@ -38,7 +38,7 @@ class Fish extends MoveableObject {
     // Move left and play swimming animation
     // this.moveLeft();
     setInterval(() => {
-      this.playAnimationSwimming(this.IMAGES_SWIMMING)
+      this.playAnimation(this.IMAGES_SWIMMING)
     }, 120);
   };
 }

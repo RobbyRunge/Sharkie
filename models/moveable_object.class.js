@@ -16,6 +16,7 @@ class MoveableObject {
   offsetBottom = 0;
   offsetLeft = 0;
   offsetRight = 0;
+  energy = 100;
 
   loadImage(path) {
     // Load a single image
@@ -67,29 +68,24 @@ class MoveableObject {
             (this.y + topOffset) <= (moveableObject.y + moveableObject.height);
   }
 
-  playAnimationSwimming(images) {
-    // Play swimming animation sequence
-    let index = this.currentImage % this.IMAGES_SWIMMING.length; 
+  hit() {
+    this.energy -= 5;
+    if (this.energy < 0) {
+      this.energy = 0
+    }
+  }
+
+  isDead() {
+    return this.energy == 0;
+  }
+
+  playAnimation(images) {
+    // Play any animation sequence
+    let index = this.currentImage % images.length; 
     let path = images[index];
     this.img = this.imageCache[path];
     this.currentImage++;
   }
-
-  playAnimationStand(images) {
-    // Play standing animation sequence
-    let index = this.currentImage % this.IMAGES_STAND.length; 
-    let path = images[index];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-  }
-
-  // playAnimationSleep(images) {
-  //   // Play sleeping animation sequence
-  //   let index = this.currentImage % this.IMAGES_SLEEP.length; 
-  //   let path = images[index];
-  //   this.img = this.imageCache[path];
-  //   this.currentImage++;
-  // }
 
   moveRight() {
     // Move object right

@@ -36,7 +36,7 @@ class Endboss extends MoveableObject {
   animate() {
     // Play floating animation
     setInterval(() => {
-      this.playAnimationStand(this.IMAGES_STAND);
+      this.playAnimation(this.IMAGES_STAND);
     }, 120);
   }
 };
