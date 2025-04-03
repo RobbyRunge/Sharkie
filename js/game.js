@@ -10,6 +10,8 @@ function init() {
 
 // Event listeners for keydown events - set corresponding keyboard properties to true
 window.addEventListener('keydown', (event => {
+  console.log(event.code == 'KeyD');
+  
   if(event.code == 'ArrowLeft') {
     keyboard.LEFT = true;
   }
@@ -24,6 +26,9 @@ window.addEventListener('keydown', (event => {
   }
   if(event.code == 'Space') {
     keyboard.SPACE = true;
+  } 
+  if(event.code == 'KeyD') {
+    keyboard.D = true;
   }
 }));
 
@@ -43,5 +48,8 @@ window.addEventListener('keyup', (event => {
   }
   if(event.code == 'Space') {
     keyboard.SPACE = false;
+  }
+  if (event.code == 'KeyD') {
+    keyboard.D = false;
   }
 }));
