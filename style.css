@@ -1,9 +1,18 @@
 body {
+  font-family: "Poppins", sans-serif;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: url('img/3.Background/Light/1.png') no-repeat center center / cover;
+  color: white;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
 }
 
 canvas {
   background-color: black;
+  border: 2px solid white;
 }
