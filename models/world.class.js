@@ -7,6 +7,8 @@ class World {
   keyboard; // Keyboard input reference
   camera_x = 0; // Camera horizontal position
   statusBar =  new StatusBar();
+  coinBar = new CoinBar();
+  posionBar = new PosionBar();
 
   constructor(canvas, keyboard) {
     // Initialize world with canvas and input
@@ -28,7 +30,7 @@ class World {
       this.level.enemies.forEach ((enemy) => {
         if (this.character.isColliding(enemy)) {
           this.character.hit();
-          console.log(this.character.energy);
+          this.statusBar.setPercentage(this.character.energy);
         }
       });
     }, 100);
@@ -41,7 +43,14 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
     this.addToMap(this.character);
+
+    this.ctx.translate(-this.camera_x, 0);
+    // ---- Space for fixed objects ----
     this.addToMap(this.statusBar);
+    this.addToMap(this.coinBar);
+    this.addToMap(this.posionBar);
+    this.ctx.translate(this.camera_x, 0);
+
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.camera_x, 0);
     // Draw() wird immer wieder aufgerufen
