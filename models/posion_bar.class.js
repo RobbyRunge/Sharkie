@@ -2,12 +2,12 @@ class PosionBar extends DrawableObject {
   percentage = 100;
 
   IMAGES_POISON = [
-    'img/4.Marcadores/green/poisoned bubbles/0.png',
-    'img/4.Marcadores/green/poisoned bubbles/20.png',
-    'img/4.Marcadores/green/poisoned bubbles/40.png',
-    'img/4.Marcadores/green/poisoned bubbles/60.png',
-    'img/4.Marcadores/green/poisoned bubbles/80.png',
-    'img/4.Marcadores/green/poisoned bubbles/100.png',
+    './img/4.Marcadores/green/poisoned bubbles/0.png',
+    './img/4.Marcadores/green/poisoned bubbles/20.png',
+    './img/4.Marcadores/green/poisoned bubbles/40.png',
+    './img/4.Marcadores/green/poisoned bubbles/60.png',
+    './img/4.Marcadores/green/poisoned bubbles/80.png',
+    './img/4.Marcadores/green/poisoned bubbles/100.png',
   ];
 
   constructor() {
