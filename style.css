@@ -1,11 +1,16 @@
+@font-face {
+  font-family: 'hennyPenny_regular';
+  src: url('./fonts/hennyPenny_regular.ttf') format('truetype');
+}  
+
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "hennyPenny_regular";
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: url('./img/3.Background/Light/1.png') no-repeat center center / cover;
+  background: url('./img/3.Background/background.jpg') center center / cover;
   color: white;
   margin: 0;
   overflow: hidden;
@@ -15,4 +20,13 @@ body {
 canvas {
   background-color: black;
   border: 2px solid white;
+
+}
+
+h1 {
+  position: absolute;
+  top: 120px;
+  letter-spacing: 3px;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+  color: blue;
 }
