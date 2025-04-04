@@ -27,7 +27,7 @@ canvas {
   display: block;
 }
 
-.star_screen {
+.start_screen {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,4 +1,7 @@
-const level_1 = new Level(
+let level_1;
+
+function initLevel() {
+  level_1 = new Level( 
   [
     // Array of enemies (fish and endboss)
     new Fish(), 
@@ -36,4 +39,5 @@ const level_1 = new Level(
     new BackgroundObject("./img/3.Background/Layers/3.Fondo 1/D2.png", 720 * 3),
     new BackgroundObject("./img/3.Background/Layers/2. Floor/L2.png", 720 * 3),
     new BackgroundObject("./img/3.Background/Layers/1. Light/2.png", 720 * 3),
-]);
+  ]);
+}
