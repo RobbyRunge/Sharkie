@@ -3,14 +3,18 @@
   src: url('./fonts/hennyPenny_regular.ttf') format('truetype');
 }  
 
-body {
+* {
   font-family: "hennyPenny_regular";
+  letter-spacing: 3px;
+}
+
+body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: url('./img/3.Background/background.jpg') center center / cover;
+  background: url('./img/3.Background/background.jpg') no-repeat center center / cover;
   color: white;
   margin: 0;
   overflow: hidden;
@@ -23,12 +27,50 @@ canvas {
   display: block;
 }
 
+.star_screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background: url('./img/3.Background/background.jpg') no-repeat center center / cover;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+.d_none {
+  display: none;
+}
+
 h1 {
-  position: absolute;
-  top: 120px;
-  letter-spacing: 3px;
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+  font-size: 48px;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
   color: blue;
+  margin: 0;
+}
+
+button {
+  padding: 12px 24px 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: lightblue;
+  border: none;
+  border-radius: 24px;
+  transition: 125ms ease-in-out;  
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+}
+
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
+  background-color: rgb(75, 75, 255);
+  color: white;
 }
 
 @media only screen and (max-width: 720px) {

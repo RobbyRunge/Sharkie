@@ -56,6 +56,8 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
     this.addObjectsToMap(this.throwableObject); 
+    
+    this.addObjectsToMap(this.level.enemies);
     this.addToMap(this.character);
 
     this.ctx.translate(-this.camera_x, 0);
@@ -65,7 +67,6 @@ class World {
     this.addToMap(this.posionBar);
     this.ctx.translate(this.camera_x, 0);
 
-    this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.camera_x, 0);
     // Draw() wird immer wieder aufgerufen
     let self = this;
