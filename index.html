@@ -24,15 +24,24 @@
   <script src="./js/menu.js"></script>
 </head>
 <body onload="init()">
-   <div id="start_screen" class="start_screen">
+  <div id="background_overlay">
+    <button id="close_overlay_btn" onclick="closeOverlay()" style="position: absolute; top: 20px; right: 20px; display: none;">CLOSE</button>
+  </div>
+
+  <div id="start_screen" class="start_screen">
     <div class="menu">
       <h1>SHARKIE</h1>
       <button onclick="startGame()">START</button>
-      <button>CONTROLS</button>
-      <button>IMPRINT</button>
-      <button>PRIVACY POLICY</button>
+      <button onclick="openOverlay()">CONTROLS</button>
+      <button onclick="openOverlay()">IMPRINT</button>
+      <button onclick="openOverlay()">PRIVACY POLICY</button>
     </div>
-   </div>
+  </div>
+
+  <div class="controls_overlay"></div>
+  <div class="imprint_overlay"></div>
+  <div class="privacy_overlay"></div>
+
   <canvas id="canvas" width="720" height="480"></canvas>
 </body>
 </html>
