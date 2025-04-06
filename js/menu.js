@@ -5,18 +5,54 @@ function startGame() {
   console.log('start');
 };
 
-function openOverlay() {
+function openOverlay(type) {
+  showBackgroundOverlay();
+  showCloseButton();
+  showSpecificOverlay(type);
+}
+
+function showBackgroundOverlay() {
   let backgroundOverlayRef = document.getElementById('background_overlay');
   backgroundOverlayRef.classList.add('background_overlay');
+}
+
+function showCloseButton() {
   let closeButton = document.getElementById('close_overlay_btn');
   closeButton.style.display = 'block';
-};
+}
+
+function showSpecificOverlay(type) {
+  let overlayToShow = document.querySelector(`.${type}_overlay`);
+  if (overlayToShow) {
+    overlayToShow.style.display = 'block';
+  }
+}
 
 function closeOverlay() {
   let backgroundOverlayRef = document.getElementById('background_overlay');
-  let closeButton = document.getElementById('close_overlay_btn');
+  hideBackgroundOverlay(backgroundOverlayRef);
+  hideCloseButton(backgroundOverlayRef);
+  hideAllContentOverlays(backgroundOverlayRef);
+  removeClassesAfterAnimation(backgroundOverlayRef);
+}
+
+function hideBackgroundOverlay(backgroundOverlayRef) {
   backgroundOverlayRef.classList.add('background_overlay_closing');
+}
+
+function hideCloseButton() {
+  let closeButton = document.getElementById('close_overlay_btn');
   closeButton.style.display = 'none';
+}
+
+function hideAllContentOverlays() {
+  let contentOverlays = document.querySelectorAll('.overlay_content');
+  contentOverlays.forEach(overlay => {
+    overlay.style.display = 'none';
+  });
+}
+
+function removeClassesAfterAnimation(backgroundOverlayRef) {
   setTimeout(function() {
     backgroundOverlayRef.classList.remove('background_overlay');
     backgroundOverlayRef.classList.remove('background_overlay_closing');

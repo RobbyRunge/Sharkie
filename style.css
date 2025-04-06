@@ -59,6 +59,45 @@ canvas {
   animation: fadeOut 0.5s ease-in-out forwards;
 }
 
+.overlay_content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 80%;
+  color: black;
+  z-index: 3;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.overlay_content h2 {
+  color: blue;
+  margin-top: 0;
+}
+
+.overlay_content p {
+  margin-bottom: 20px;
+}
+
+#close_overlay_btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 4;
+  background-color: red;
+  color: white;
+}
+
+#close_overlay_btn:hover {
+  background-color: darkred;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -25,22 +25,42 @@
 </head>
 <body onload="init()">
   <div id="background_overlay">
-    <button id="close_overlay_btn" onclick="closeOverlay()" style="position: absolute; top: 20px; right: 20px; display: none;">CLOSE</button>
+    <button id="close_overlay_btn" class="d_none" onclick="closeOverlay()">CLOSE</button>
   </div>
 
   <div id="start_screen" class="start_screen">
     <div class="menu">
       <h1>SHARKIE</h1>
       <button onclick="startGame()">START</button>
-      <button onclick="openOverlay()">CONTROLS</button>
-      <button onclick="openOverlay()">IMPRINT</button>
-      <button onclick="openOverlay()">PRIVACY POLICY</button>
+      <button onclick="openOverlay('controls')">CONTROLS</button>
+      <button onclick="openOverlay('imprint')">IMPRINT</button>
+      <button onclick="openOverlay('privacy')">PRIVACY POLICY</button>
     </div>
   </div>
 
-  <div class="controls_overlay"></div>
-  <div class="imprint_overlay"></div>
-  <div class="privacy_overlay"></div>
+  <div class="controls_overlay overlay_content">
+    <h2>Game Controls</h2>
+    <p>Use the following controls to play Sharkie:</p>
+    <ul>
+      <li>Arrow Keys: Move Sharkie in all directions</li>
+      <li>D: Throw poisoned bubble</li>
+      <li>Space: Special action</li>
+    </ul>
+  </div>
+  
+  <div class="imprint_overlay overlay_content">
+    <h2>Imprint</h2>
+    <p>Sharkie Game</p>
+    <p>Developed by: Robby Runge</p>
+    <p>Contact: robbyrunge@yahoo.com</p>
+    <p>© 2025 All rights reserved</p>
+  </div>
+  
+  <div class="privacy_overlay overlay_content">
+    <h2>Privacy Policy</h2>
+    <p>This game does not collect any personal data.</p>
+    <p>We respect your privacy and ensure that no information is shared with third parties.</p>
+  </div>
 
   <canvas id="canvas" width="720" height="480"></canvas>
 </body>
