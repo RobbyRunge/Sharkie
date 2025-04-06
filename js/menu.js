@@ -3,12 +3,19 @@ function startGame() {
   startScreenRef.classList.add('d_none');
   // initLevel();
   console.log('start');
-};
+}
 
 function openOverlay(type) {
   showBackgroundOverlay();
   showCloseButton();
   showSpecificOverlay(type);
+  document.getElementById('background_overlay').addEventListener('click', handleBackgroundClick);
+}
+
+function handleBackgroundClick(event) {
+  if (event.target.id === 'background_overlay') {
+    closeOverlay();
+  }
 }
 
 function showBackgroundOverlay() {
@@ -34,6 +41,7 @@ function closeOverlay() {
   hideCloseButton(backgroundOverlayRef);
   hideAllContentOverlays(backgroundOverlayRef);
   removeClassesAfterAnimation(backgroundOverlayRef);
+  backgroundOverlayRef.removeEventListener('click', handleBackgroundClick);
 }
 
 function hideBackgroundOverlay(backgroundOverlayRef) {
