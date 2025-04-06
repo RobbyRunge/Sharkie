@@ -24,6 +24,8 @@ class Character extends MoveableObject {
     sleeping: 0,
     hit: 0 // Add hit animation timestamp
   };
+  bottles = 0; // Track collected poison bottles
+  maxBottles = 10; // Maximum number of bottles to collect
 
   IMAGES_STAND = [
     // Standing/idle animation frames
@@ -268,5 +270,21 @@ class Character extends MoveableObject {
       this.hitTime = 0;
       super.hit();
     }
+  }
+
+  collectBottle() {
+    if (this.bottles < this.maxBottles) {
+      this.bottles++;
+      return true; // Successfully collected
+    }
+    return false; // Already at maximum
+  }
+  
+  useBottle() {
+    if (this.bottles > 0) {
+      this.bottles--;
+      return true; // Successfully used a bottle
+    }
+    return false; // No bottles available
   }
 }

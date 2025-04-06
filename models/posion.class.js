@@ -29,6 +29,9 @@ class Posion extends MoveableObject {
     this.offsetLeft = 10;
     this.offsetRight = 10;
     
+    // Ensure this is set to make collision detection work properly
+    this.isCollectible = true;
+    
     this.animate();
   }
 
