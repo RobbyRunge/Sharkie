@@ -10,9 +10,7 @@ function init() {
 }
 
 // Event listeners for keydown events - set corresponding keyboard properties to true
-window.addEventListener('keydown', (event => {
-  console.log(event.code == 'KeyD');
-  
+window.addEventListener('keydown', (event => {  
   if(event.code == 'ArrowLeft') {
     keyboard.LEFT = true;
   }
