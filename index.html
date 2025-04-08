@@ -19,16 +19,17 @@
   <script src="./models/level.class.js"></script>
   <script src="./models/throwable_object.class.js"></script>
   <script src="./models/endboss.class.js"></script>
+  <script src="./models/posion.class.js"></script>
   <script src="./levels/level_1.js"></script>
   <script src="./js/game.js"></script>
   <script src="./js/menu.js"></script>
 </head>
-<body>
+<body onload="init()">
   <div id="background_overlay">
     <button id="close_overlay_btn" class="d_none" onclick="closeOverlay()">CLOSE</button>
   </div>
 
-  <div id="start_screen" class="start_screen">
+  <div id="start_screen" class="start_screen d_none">
     <div class="menu">
       <h1>SHARKIE</h1>
       <button onclick="startGame(), init()">START</button>

@@ -19,6 +19,7 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    this.updatePoisonBar(); // Initialize poison bar
   }
 
   setWorld() {
@@ -34,19 +35,60 @@ class World {
   }
 
   checkThrowObjects() {
-    if (this.keyboard.D) {
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
-      this.throwableObject.push(bottle)
+    // Start shooting animation when D is pressed
+    if (this.keyboard.D && this.character.startShooting()) {
+      // The animation is started, but no projectile yet
+    }
+    
+    // Create projectile when shooting animation is at the right point
+    if (this.character.shootingComplete && !this.character.shootingProcessed && this.character.useBottle()) {
+      // Create the projectile
+      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+      this.throwableObject.push(bottle);
+      
+      // Update the poison bar to reflect the used bottle
+      this.updatePoisonBar();
+      
+      // Mark as processed to prevent multiple projectiles
+      this.character.shootingProcessed = true;
     }
   }
 
   checkCollisions() {
-    this.level.enemies.forEach ((enemy) => {
+    this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBar.setPercentage(this.character.energy);
+        if (enemy instanceof Posion) {
+          this.handlePoisonCollision(enemy);
+        } else {
+          this.handleEnemyCollision();
+        }
       }
     });
+  }
+  
+  handlePoisonCollision(poisonBottle) {
+    if (this.character.collectBottle()) {
+      this.removeFromLevel(poisonBottle);
+      this.updatePoisonBar();
+    }
+  }
+  
+  handleEnemyCollision() {
+    this.character.hit();
+    this.statusBar.setPercentage(this.character.energy);
+  }
+  
+  removeFromLevel(object) {
+    let index = this.level.enemies.indexOf(object);
+    if (index > -1) {
+      this.level.enemies.splice(index, 1);
+    }
+  }
+
+  updatePoisonBar() {
+    // Calculate percentage based on current bottles (0-10 maps to 0-100%)
+    let percentage = (this.character.bottles / this.character.maxBottles) * 100;
+    this.posionBar.setPercentage(percentage);
   }
 
   draw() {
@@ -84,13 +126,11 @@ class World {
 
   addToMap(moveableObject) {
     this.ctx.save();    
-    
     if (moveableObject instanceof Character) {
       this.drawRotatedObject(moveableObject);
     } else {
       this.drawObject(moveableObject);
     }
-    
     this.ctx.restore();
   }
 
