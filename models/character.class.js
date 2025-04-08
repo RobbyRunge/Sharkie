@@ -16,16 +16,25 @@ class Character extends MoveableObject {
     swimming: 100,
     standing: 150,
     sleeping: 300,
-    hit: 100 // Add hit animation speed
+    hit: 100, // Add hit animation speed
+    shooting: 50
   };
   lastAnimationUpdate = {
     swimming: 0,
     standing: 0,
     sleeping: 0,
-    hit: 0 // Add hit animation timestamp
+    hit: 0, // Add hit animation timestamp
+    shooting: 0
   };
   bottles = 0; // Track collected poison bottles
   maxBottles = 10; // Maximum number of bottles to collect
+  isShooting = false;
+  shootingTime = 0;
+  shootingDuration = 350; // Duration of shooting animation in ms
+  shootingComplete = false; // Flag to indicate when to create the projectile
+  canShoot = true; // Flag to prevent multiple shots per animation
+  shootingProcessed = false; // Flag to track if shooting has been processed
+  currentShootingFrame = 0; // Track current shooting frame
 
   IMAGES_STAND = [
     // Standing/idle animation frames
@@ -85,6 +94,16 @@ class Character extends MoveableObject {
     './img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
   ];
 
+  IMAGES_SHOOTING = [
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/1.png',
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/2.png',
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/3.png',
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/4.png',
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/5.png',
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/6.png',
+    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png'
+  ];
+
   IMAGES_DEAD = [
     // Dead animation frames
     './img/1.Sharkie/6.dead/1.Poisoned/1.png',
@@ -107,6 +126,7 @@ class Character extends MoveableObject {
     this.loadImages(this.IMAGES_SWIMMING);
     this.loadImages(this.IMAGES_SLEEP);
     this.loadImages(this.IMAGES_HIT);
+    this.loadImages(this.IMAGES_SHOOTING);
     this.loadImages(this.IMAGES_DEAD);
     this.offsetTop = 95;
     this.offsetBottom = 45;
@@ -138,6 +158,8 @@ class Character extends MoveableObject {
         this.handleDeadAnimation();
       } else if (this.isHit) {
         this.handleHitAnimation(now);
+      } else if (this.isShooting) {
+        this.handleShootingAnimation(now);
       } else if (this.isMoving()) {
         this.handleMovementAnimation(now);
       } else {
@@ -167,6 +189,41 @@ class Character extends MoveableObject {
         this.hitTime = 0;
       }
     }
+  }
+
+  handleShootingAnimation(now) {
+    // Only update animation when enough time has passed
+    const timeElapsed = now - this.lastAnimationUpdate.shooting;
+    if (timeElapsed < this.animationSpeed.shooting) return;
+    // 1. Update animation frame - manually control which frame is shown
+    this.lastAnimationUpdate.shooting = now;
+    // Use the current frame index instead of cycling through all frames
+    if (this.currentShootingFrame < this.IMAGES_SHOOTING.length) {
+      this.img = this.imageCache[this.IMAGES_SHOOTING[this.currentShootingFrame]];
+      this.currentShootingFrame++; // Move to next frame
+    }
+    // Track overall animation progress
+    this.shootingTime += 100;
+    // 2. Only set shootingComplete at the very end of the animation
+    if (this.currentShootingFrame >= this.IMAGES_SHOOTING.length - 1 && !this.shootingComplete) {
+      this.shootingComplete = true;
+    }
+    // 3. Add a small delay before resetting to allow for projectile creation
+    if (this.currentShootingFrame >= this.IMAGES_SHOOTING.length) {
+      this.resetShootingState();
+    }
+  }
+  
+  // Helper method to reset all shooting-related state
+  resetShootingState() {
+    this.isShooting = false;
+    this.shootingTime = 0;
+    this.shootingComplete = false;
+    this.shootingProcessed = false;
+    this.currentShootingFrame = 0; // Reset frame index
+    setTimeout(() => {
+      this.canShoot = true;
+    }, 200);
   }
 
   handleMovementAnimation(now) {
@@ -286,5 +343,19 @@ class Character extends MoveableObject {
       return true; // Successfully used a bottle
     }
     return false; // No bottles available
+  }
+
+  startShooting() {
+    // Only start shooting if we have bottles and aren't already shooting
+    if (this.bottles > 0 && !this.isShooting && this.canShoot) {
+      this.isShooting = true;
+      this.canShoot = false;
+      this.shootingComplete = false;
+      this.shootingProcessed = false;
+      this.shootingTime = 0;
+      this.currentShootingFrame = 0; // Reset frame index when starting new shot
+      return true;
+    }
+    return false;
   }
 }

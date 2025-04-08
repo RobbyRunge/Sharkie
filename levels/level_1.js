@@ -3,15 +3,17 @@ let level_1;
 function initLevel() {
   level_1 = new Level(
   [
+    // Add poison bottles to the level
+    new Posion(),
+    new Posion(),
+    new Posion(),
+    new Posion(),
+    new Posion(),
     // Array of enemies (fish and endboss)
     new Fish(), 
     new Fish(), 
     new Fish(),
     new Endboss(),
-    // Add poison bottles to the level
-    new Posion(),
-    new Posion(),
-    new Posion()
   ],
   [
     // Array of background objects creating parallax layers

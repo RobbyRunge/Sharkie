@@ -35,11 +35,22 @@ class World {
   }
 
   checkThrowObjects() {
-    if (this.keyboard.D && this.character.useBottle()) {
+    // Start shooting animation when D is pressed
+    if (this.keyboard.D && this.character.startShooting()) {
+      // The animation is started, but no projectile yet
+    }
+    
+    // Create projectile when shooting animation is at the right point
+    if (this.character.shootingComplete && !this.character.shootingProcessed && this.character.useBottle()) {
+      // Create the projectile
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
       this.throwableObject.push(bottle);
+      
       // Update the poison bar to reflect the used bottle
       this.updatePoisonBar();
+      
+      // Mark as processed to prevent multiple projectiles
+      this.character.shootingProcessed = true;
     }
   }
 
@@ -115,13 +126,11 @@ class World {
 
   addToMap(moveableObject) {
     this.ctx.save();    
-    
     if (moveableObject instanceof Character) {
       this.drawRotatedObject(moveableObject);
     } else {
       this.drawObject(moveableObject);
     }
-    
     this.ctx.restore();
   }
 
