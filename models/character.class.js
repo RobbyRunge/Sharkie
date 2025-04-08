@@ -9,6 +9,8 @@ class Character extends MoveableObject {
   rotation = 0; // Track current rotation angle in degrees
   idleTime = 0;
   isInSleepMode = false;
+  sleepCycleComplete = false;
+  currentSleepFrame = 0;
   isHit = false;
   hitTime = 0;
   hitDuration = 100; // Duration of hit animation in ms
@@ -230,6 +232,8 @@ class Character extends MoveableObject {
     // Reset idle time when moving
     this.idleTime = 0;
     this.isInSleepMode = false;
+    this.sleepCycleComplete = false;
+    this.currentSleepFrame = 0;
     // Update swimming animation at swimming speed
     if (now - this.lastAnimationUpdate.swimming >= this.animationSpeed.swimming) {
       this.playAnimation(this.IMAGES_SWIMMING);
@@ -252,14 +256,41 @@ class Character extends MoveableObject {
     if (this.idleTime > 5000 && !this.isInSleepMode) {
       // After 5 seconds of idle time, start sleep animation
       this.isInSleepMode = true;
+      this.sleepCycleComplete = false;
+      this.currentSleepFrame = 0;
     }
   }
 
   playSlowSleepAnimation(now) {
-    // Update sleep animation at sleeping speed
+    // Only update animation when enough time has passed
     if (now - this.lastAnimationUpdate.sleeping >= this.animationSpeed.sleeping) {
-      this.playAnimation(this.IMAGES_SLEEP);
       this.lastAnimationUpdate.sleeping = now;
+      if (!this.sleepCycleComplete) {
+        this.playInitialSleepAnimation();
+      } else {
+        this.playLoopingSleepAnimation();
+      }
+    }
+  }
+  
+  playInitialSleepAnimation() {
+    // First cycle: Play full animation
+    this.img = this.imageCache[this.IMAGES_SLEEP[this.currentSleepFrame]];
+    this.currentSleepFrame++;
+    // Check if first cycle is complete
+    if (this.currentSleepFrame >= this.IMAGES_SLEEP.length) {
+      this.sleepCycleComplete = true;
+      this.currentSleepFrame = 10; // Index for frame 11
+    }
+  }
+  
+  playLoopingSleepAnimation() {
+    // After first cycle: Only play frames 11-14
+    this.img = this.imageCache[this.IMAGES_SLEEP[this.currentSleepFrame]];
+    this.currentSleepFrame++; 
+    // Loop between frames 10-14 (indices 10-13)
+    if (this.currentSleepFrame > 13) {
+      this.currentSleepFrame = 10;
     }
   }
 
