@@ -30,6 +30,8 @@ class Character extends MoveableObject {
   };
   bottles = 0; // Track collected poison bottles
   maxBottles = 10; // Maximum number of bottles to collect
+  coins = 0;
+  maxCoins = 10;
   isShooting = false;
   shootingTime = 0;
   shootingDuration = 350; // Duration of shooting animation in ms
@@ -366,6 +368,14 @@ class Character extends MoveableObject {
       return true; // Successfully collected
     }
     return false; // Already at maximum
+  }
+
+  collectCoins() {
+    if (this.coins < this.maxCoins) {
+      this.coins++;
+      return true;
+    }
+    return false;
   }
   
   useBottle() {
