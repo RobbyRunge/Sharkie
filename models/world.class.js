@@ -97,13 +97,13 @@ class World {
 
   updatePoisonBar() {
     // Calculate percentage based on current bottles (0-10 maps to 0-100%)
-    let percentage = (this.character.bottles / this.character.maxBottles) * 200;
+    let percentage = (this.character.bottles / this.character.maxBottles) * 100;
     this.posionBar.setPercentage(percentage);
   }
 
   updateCoinBar() {
     // Calculate percentage based on current coins (now 0-10 maps to 0-100%) CHANGE?? What happen with a full coinbar
-    let percentage = (this.character.coins / this.character.maxCoins) * 200;
+    let percentage = (this.character.coins / this.character.maxCoins) * 100;
     this.coinBar.setPercentage(percentage);
   }
 
