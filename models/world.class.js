@@ -20,6 +20,7 @@ class World {
     this.setWorld();
     this.run();
     this.updatePoisonBar(); // Initialize poison bar
+    this.updateCoinBar(); // Initialize coin bar
   }
 
   setWorld() {
@@ -59,6 +60,8 @@ class World {
       if (this.character.isColliding(enemy)) {
         if (enemy instanceof Posion) {
           this.handlePoisonCollision(enemy);
+        } else if (enemy instanceof Coin) {
+          this.handleCoinCollision(enemy);
         } else {
           this.handleEnemyCollision();
         }
@@ -70,6 +73,13 @@ class World {
     if (this.character.collectBottle()) {
       this.removeFromLevel(poisonBottle);
       this.updatePoisonBar();
+    }
+  }
+
+  handleCoinCollision(coin) {
+    if (this.character.collectCoins()) {
+      this.removeFromLevel(coin);
+      this.updateCoinBar();
     }
   }
   
@@ -89,6 +99,12 @@ class World {
     // Calculate percentage based on current bottles (0-10 maps to 0-100%)
     let percentage = (this.character.bottles / this.character.maxBottles) * 100;
     this.posionBar.setPercentage(percentage);
+  }
+
+  updateCoinBar() {
+    // Calculate percentage based on current coins (now 0-10 maps to 0-100%) CHANGE?? What happen with a full coinbar
+    let percentage = (this.character.coins / this.character.maxCoins) * 100;
+    this.coinBar.setPercentage(percentage);
   }
 
   draw() {

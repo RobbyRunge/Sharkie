@@ -21,7 +21,7 @@ class Posion extends MoveableObject {
     
     // Size appropriate for collectible
     this.width = 60;
-    this.height = 60;
+    this.height = 70;
     
     // Set collision boundaries
     this.offsetTop = 10;
