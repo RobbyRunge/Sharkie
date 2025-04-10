@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'hennyPenny_regular';
-  src: url('./fonts/hennyPenny_regular.ttf') format('truetype');
+  font-family: 'super_water';
+  src: url('./fonts/Super\ Water.ttf') format('truetype');
 }  
 
 * {
-  font-family: "hennyPenny_regular";
-  letter-spacing: 3px;
+  font-family: "super_water";
+  letter-spacing: 5px;
 }
 
 body {
@@ -121,10 +121,18 @@ canvas {
 }
 
 h1 {
-  font-size: 48px;
+  font-size: 80px;
   text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
   color: blue;
   margin: 0;
+}
+
+.keyboard_key_color {
+  color: cadetblue;
+}
+
+ul {
+  padding-left: 18px;
 }
 
 button {
