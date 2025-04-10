@@ -248,6 +248,11 @@ class Character extends MoveableObject {
   
   // Helper method to reset all shooting-related state
   resetShootingState() {
+    // Reset idle time when moving
+    this.idleTime = 0;
+    this.isInSleepMode = false;
+    this.sleepCycleComplete = false;
+    this.currentSleepFrame = 0;
     this.isShooting = false;
     this.shootingTime = 0;
     this.shootingComplete = false;
