@@ -99,13 +99,23 @@ class Character extends MoveableObject {
   ];
 
   IMAGES_SHOOTING = [
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/1.png',
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/2.png',
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/3.png',
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/4.png',
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/5.png',
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/6.png',
-    './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png'
+    // Shoot animation frames
+    // first 7 pictures without bubble
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/1.png',
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/2.png',
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/3.png',
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/4.png',
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/5.png',
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/6.png',
+    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png'
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png',
+    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
   ];
 
   IMAGES_DEAD = [
