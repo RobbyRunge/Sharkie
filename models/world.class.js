@@ -32,7 +32,14 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
+      this.checkSlapping();
       }, 100);
+  }
+
+  checkSlapping() {
+    if (this.keyboard.SPACE) {
+      this.character.startSlapping();
+    }
   }
 
   checkThrowObjects() {

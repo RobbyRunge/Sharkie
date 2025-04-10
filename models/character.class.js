@@ -19,6 +19,7 @@ class Character extends MoveableObject {
     standing: 150,
     sleeping: 300,
     hit: 100, // Add hit animation speed
+    slapping: 70,
     shooting: 50
   };
   lastAnimationUpdate = {
@@ -26,19 +27,24 @@ class Character extends MoveableObject {
     standing: 0,
     sleeping: 0,
     hit: 0, // Add hit animation timestamp
+    slapping: 0,
     shooting: 0
   };
   bottles = 0; // Track collected poison bottles
   maxBottles = 5; // Maximum number of bottles to collect
   coins = 0;
   maxCoins = 5;
+  currentSlapFrame = 0;
+  slapTime = 0;
+  slapComplete = false;
   isShooting = false;
+  currentShootingFrame = 0; // Track current shooting frame
   shootingTime = 0;
   shootingDuration = 350; // Duration of shooting animation in ms
   shootingComplete = false; // Flag to indicate when to create the projectile
   canShoot = true; // Flag to prevent multiple shots per animation
   shootingProcessed = false; // Flag to track if shooting has been processed
-  currentShootingFrame = 0; // Track current shooting frame
+
 
   IMAGES_STAND = [
     // Standing/idle animation frames
@@ -118,6 +124,21 @@ class Character extends MoveableObject {
     'img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
   ];
 
+  IMAGES_SLAP = [
+    'img/1.Sharkie/4.Attack/Fin slap/1.png',
+    'img/1.Sharkie/4.Attack/Fin slap/2.png',
+    'img/1.Sharkie/4.Attack/Fin slap/3.png',
+    'img/1.Sharkie/4.Attack/Fin slap/4.png',
+    'img/1.Sharkie/4.Attack/Fin slap/5.png',
+    'img/1.Sharkie/4.Attack/Fin slap/6.png',
+    'img/1.Sharkie/4.Attack/Fin slap/7.png',
+    'img/1.Sharkie/4.Attack/Fin slap/8.png',
+    'img/1.Sharkie/4.Attack/Fin slap/4.png',
+    'img/1.Sharkie/4.Attack/Fin slap/3.png',
+    'img/1.Sharkie/4.Attack/Fin slap/2.png',
+    'img/1.Sharkie/4.Attack/Fin slap/1.png',
+  ];
+
   IMAGES_DEAD = [
     // Dead animation frames
     './img/1.Sharkie/6.dead/1.Poisoned/1.png',
@@ -141,6 +162,7 @@ class Character extends MoveableObject {
     this.loadImages(this.IMAGES_SLEEP);
     this.loadImages(this.IMAGES_HIT);
     this.loadImages(this.IMAGES_SHOOTING);
+    this.loadImages(this.IMAGES_SLAP);
     this.loadImages(this.IMAGES_DEAD);
     this.offsetTop = 95;
     this.offsetBottom = 45;
@@ -172,6 +194,8 @@ class Character extends MoveableObject {
         this.handleDeadAnimation();
       } else if (this.isHit) {
         this.handleHitAnimation(now);
+      } else if (this.isSlapping) {
+        this.handleSlapingAnimation(now);
       } else if (this.isShooting) {
         this.handleShootingAnimation(now);
       } else if (this.isMoving()) {
@@ -203,6 +227,54 @@ class Character extends MoveableObject {
         this.hitTime = 0;
       }
     }
+  }
+
+  startSlapping() {
+    if (!this.isSlapping) {
+      this.idleTime = 0;
+      this.isInSleepMode = false;
+      this.sleepCycleComplete = false;
+      this.currentSleepFrame = 0;
+      this.isSlapping = true;
+      this.currentSlapFrame = 0;
+      this.slapComplete = false;
+      return true;
+    }
+    return false;
+  }
+
+  handleSlapingAnimation(now) {
+    if (this.shouldSkipSlapAnimationUpdate(now)) return;
+    this.updateSlapAnimationTimestamp(now);
+    this.advanceSlapFrame();
+    this.checkForSlapAnimationCompletion();
+  }
+
+  shouldSkipSlapAnimationUpdate(now) {
+    const timeElapsed = now - this.lastAnimationUpdate.slapping;
+    return timeElapsed < this.animationSpeed.slapping;
+  }
+
+  updateSlapAnimationTimestamp(now) {
+    this.lastAnimationUpdate.slapping = now;
+  }
+
+  advanceSlapFrame() {
+    if (this.currentSlapFrame < this.IMAGES_SLAP.length) {
+      this.img = this.imageCache[this.IMAGES_SLAP[this.currentSlapFrame]];
+      this.currentSlapFrame++;
+    }
+  }
+
+  checkForSlapAnimationCompletion() {
+    if (this.currentSlapFrame >= this.IMAGES_SLAP.length) {
+      this.resetSlapState();
+    }
+  }
+
+  resetSlapState() {
+    this.isSlapping = false;
+    this.currentSlapFrame = 0;
   }
 
   handleShootingAnimation(now) {

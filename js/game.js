@@ -25,6 +25,7 @@ window.addEventListener('keydown', (event => {
   }
   if(event.code == 'Space') {
     keyboard.SPACE = true;
+    console.log("space pressed");
   } 
   if(event.code == 'KeyD') {
     keyboard.D = true;
