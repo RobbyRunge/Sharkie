@@ -206,23 +206,41 @@ class Character extends MoveableObject {
   }
 
   handleShootingAnimation(now) {
-    // Only update animation when enough time has passed
+    if (this.shouldSkipAnimationUpdate(now)) return;
+    this.updateAnimationTimestamp(now);
+    this.advanceShootingFrame();
+    this.trackAnimationProgress();
+    this.checkForAnimationCompletion();
+    this.checkForAnimationReset();
+  }
+  
+  shouldSkipAnimationUpdate(now) {
     const timeElapsed = now - this.lastAnimationUpdate.shooting;
-    if (timeElapsed < this.animationSpeed.shooting) return;
-    // 1. Update animation frame - manually control which frame is shown
+    return timeElapsed < this.animationSpeed.shooting;
+  }
+  
+  updateAnimationTimestamp(now) {
     this.lastAnimationUpdate.shooting = now;
-    // Use the current frame index instead of cycling through all frames
+  }
+  
+  advanceShootingFrame() {
     if (this.currentShootingFrame < this.IMAGES_SHOOTING.length) {
       this.img = this.imageCache[this.IMAGES_SHOOTING[this.currentShootingFrame]];
       this.currentShootingFrame++; // Move to next frame
     }
-    // Track overall animation progress
+  }
+  
+  trackAnimationProgress() {
     this.shootingTime += 100;
-    // 2. Only set shootingComplete at the very end of the animation
+  }
+  
+  checkForAnimationCompletion() {
     if (this.currentShootingFrame >= this.IMAGES_SHOOTING.length - 1 && !this.shootingComplete) {
       this.shootingComplete = true;
     }
-    // 3. Add a small delay before resetting to allow for projectile creation
+  }
+  
+  checkForAnimationReset() {
     if (this.currentShootingFrame >= this.IMAGES_SHOOTING.length) {
       this.resetShootingState();
     }
