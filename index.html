@@ -23,7 +23,7 @@
   <script src="./models/coin.class.js"></script>
   <script src="./levels/level_1.js"></script>
   <script src="./js/game.js"></script>
-  <script src="./js/menu.js"></script>
+  <script src="./js/menu.js" defer></script>
 </head>
 <body onload="init()">
   <div id="background_overlay">
@@ -64,6 +64,9 @@
     <p>We respect your privacy and ensure that no information is shared with third parties.</p>
   </div>
 
-  <canvas id="canvas" width="720" height="480"></canvas>
+  <div id="game_container">
+    <img src="./img/6.Botones/Full Screen/Mesa de trabajo 6.png" alt="fullscreen" class="fullscreen_icon" onclick="handleFullscreen()">
+    <canvas id="canvas" width="720" height="480"></canvas>
+  </div>
 </body>
 </html>
