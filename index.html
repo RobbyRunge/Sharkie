@@ -23,20 +23,20 @@
   <script src="./models/coin.class.js"></script>
   <script src="./levels/level_1.js"></script>
   <script src="./js/game.js"></script>
-  <script src="./js/menu.js" defer></script>
+  <script src="./js/menu.js"></script>
 </head>
 <body onload="init()">
   <div id="background_overlay">
-    <button id="close_overlay_btn" class="d_none" onclick="closeOverlay()">CLOSE</button>
+    <button id="close_overlay_btn" class="menu_button d_none" onclick="closeOverlay()">CLOSE</button>
   </div>
 
-  <div id="start_screen" class="start_screen">
+  <div id="start_screen" class="start_screen d_none">
     <div class="menu">
       <h1>SHARKIE</h1>
-      <button onclick="startGame(), init()">START</button>
-      <button onclick="openOverlay('controls')">CONTROLS</button>
-      <button onclick="openOverlay('imprint')">IMPRINT</button>
-      <button onclick="openOverlay('privacy')">PRIVACY POLICY</button>
+      <button class="menu_button" onclick="startGame(), init()">START GAME</button>
+      <button class="menu_button" onclick="openOverlay('controls')">CONTROLS</button>
+      <button class="menu_button" onclick="openOverlay('imprint')">IMPRINT</button>
+      <button class="menu_button" onclick="openOverlay('privacy')">PRIVACY POLICY</button>
     </div>
   </div>
 
@@ -65,7 +65,11 @@
   </div>
 
   <div id="game_container">
-    <img src="./img/6.Botones/Full Screen/Mesa de trabajo 6.png" alt="fullscreen" class="fullscreen_icon" onclick="handleFullscreen()">
+    <div class="button_position_container">
+      <button class="button_style_canvas" onclick="goBackToStartscreen()">STARTSCREEN</button>
+      <button class="button_style_canvas" onclick="handleFullscreen()">FULLSCREEN</button>
+    </div>
+
     <canvas id="canvas" width="720" height="480"></canvas>
   </div>
 </body>

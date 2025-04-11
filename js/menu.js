@@ -3,6 +3,13 @@ function startGame() {
   startScreenRef.classList.add('d_none');
 }
 
+function goBackToStartscreen() {  
+  let startScreenRef = document.getElementById('start_screen');
+  startScreenRef.classList.remove('d_none');
+  closeOverlay();
+  closeFullscreen();
+}
+
 function openOverlay(type) {
   showBackgroundOverlay();
   showCloseButton();

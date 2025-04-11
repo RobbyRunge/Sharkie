@@ -5,7 +5,7 @@
 
 * {
   font-family: "super_water";
-  letter-spacing: 5px;
+  letter-spacing: 3px;
 }
 
 body {
@@ -23,7 +23,7 @@ body {
 
 canvas {
   background-color: black;
-  border: 2px solid white;
+  border: 1px solid rgb(255, 255, 255);
   display: block;
 }
 
@@ -95,10 +95,6 @@ canvas {
   margin-top: 0;
 }
 
-.overlay_content p {
-  margin-bottom: 20px;
-}
-
 #close_overlay_btn {
   position: absolute;
   top: 20px;
@@ -134,6 +130,10 @@ canvas {
   display: none;
 }
 
+p {
+  margin: 0;
+}
+
 h1 {
   font-size: 80px;
   text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
@@ -149,7 +149,7 @@ ul {
   padding-left: 18px;
 }
 
-button {
+.menu_button {
   padding: 12px 24px 12px 24px;
   font-size: 16px;
   cursor: pointer;
@@ -160,26 +160,46 @@ button {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
 }
 
-button:hover {
+.menu_button:hover {
   transform: scale(1.1);
   box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
   background-color: rgb(75, 75, 255);
   color: white;
 }
 
-.fullscreen_icon {
+.button_position_container {
   position: absolute;
-  height: 32px;
-  cursor: pointer;
-  transition: all 125ms ease-in-out;
-  border: none;
-  top: 10px;  
-  right: 10px;   
-  border-radius: 4px; 
+  top: 21%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 722px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.fullscreen_icon:hover {
+.button_style_canvas {
+  padding: 6px 12px 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: lightblue;
+  border: none;
+  border-radius: 24px;
+  transition: 125ms ease-in-out;  
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+}
+
+.button_style_canvas:hover {
   transform: scale(1.05);
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
+  background-color: rgb(75, 75, 255);
+  color: white;
+}
+
+#game_container:fullscreen .button_position_container {
+  width: 90%;
+  top: 2.5%
 }
 
 @media only screen and (max-width: 720px) {
