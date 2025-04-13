@@ -8,6 +8,7 @@ function goBackToStartscreen() {
   startScreenRef.classList.remove('d_none');
   closeOverlay();
   closeFullscreen();
+  isGameActive = false;
 }
 
 function openOverlay(type) {
@@ -92,11 +93,13 @@ function openFullscreen(element) {
 }
 
 function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) { 
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { 
-    document.msExitFullscreen();
+  if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { 
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { 
+      document.msExitFullscreen();
+    }
   }
 }
