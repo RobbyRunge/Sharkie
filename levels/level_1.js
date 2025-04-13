@@ -18,9 +18,9 @@ function initLevel() {
     new Posion(),
     new Posion(),
     // Array of enemies (fish and endboss)
-    // new Fish(), 
-    // new Fish(), 
-    // new Fish(),
+    new Fish(), 
+    new Fish(), 
+    new Fish(),
     new Endboss(),
   ],
   [

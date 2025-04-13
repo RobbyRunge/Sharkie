@@ -11,8 +11,10 @@ class ThrowableObject extends MoveableObject {
   }
 
   throw() {
-    setInterval(() => {
-      this.x += 10;
+    setStoppableInterval(() => {
+      if (isGameActive) {
+        this.x += 10;
+      }
     }, 35);
   };
 }

@@ -36,6 +36,8 @@ class MoveableObject extends DrawableObject {
   }
 
   playAnimation(images) {
+    // Only animate if game is active
+    if (!isGameActive) return;    
     // Play any animation sequence
     let index = this.currentImage % images.length; 
     let path = images[index];

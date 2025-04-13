@@ -23,22 +23,22 @@ class Fish extends MoveableObject {
     this.x = 200 + Math.random() * 500;
     this.y = 0 + Math.random() * 410;
     this.speed = 0.15 + Math.random() * 0.5;
-    
     // Use specific directional offsets
     this.offsetLeft = 4;
     this.offsetRight = 6;
     this.offsetTop = 0;
     this.offsetBottom = 20; 
-    
     this.loadImages(this.IMAGES_SWIMMING);
     this.animate();
   };
 
   animate() {
     // Move left and play swimming animation
-    // this.moveLeft();
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_SWIMMING)
+    this.moveLeft();
+    setStoppableInterval(() => {
+      if (isGameActive) {
+        this.playAnimation(this.IMAGES_SWIMMING);
+      }
     }, 120);
   };
 }

@@ -32,8 +32,10 @@ class Coin extends MoveableObject {
   }
 
   animate() {
-    setInterval(() => {
-      this.playAnimation(this.IMAGES_COIN);
+    setStoppableInterval(() => {
+      if (isGameActive) {
+        this.playAnimation(this.IMAGES_COIN);
+      }
     }, 1000 / 10);
   }
 }

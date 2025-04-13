@@ -29,11 +29,11 @@ class World {
   }
 
   run() {
-    setInterval(() => {
+    setStoppableInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
       this.checkSlapping();
-      }, 100);
+    }, 100);
   }
 
   checkSlapping() {
@@ -115,6 +115,9 @@ class World {
   }
 
   draw() {
+    // Only continue drawing if game is active
+    if (!isGameActive) return;
+    
     // Main render loop - clear canvas, apply camera transform, draw objects
     // Uses requestAnimationFrame for smooth animation
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -135,9 +138,11 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     // Draw() wird immer wieder aufgerufen
     let self = this;
-    requestAnimationFrame(function() {
-      self.draw();
-    });
+    if (isGameActive) {
+      requestAnimationFrame(function() {
+        self.draw();
+      });
+    }
   }
 
   addObjectsToMap(objects) {
@@ -215,5 +220,62 @@ class World {
   restoreOriginalDirection(moveableObject) {
     moveableObject.x = moveableObject.x * -1;
     this.ctx.restore();
+  }
+
+  stopGame() {
+    isGameActive = false;
+    intervalIds.forEach(clearInterval);
+    console.log('Game stopped - all intervals cleared');
+  }
+  
+  
+  showGameOverScreen() {
+    // Create game over overlay
+    let gameOverDiv = document.createElement('div');
+    gameOverDiv.id = 'game_over_screen';
+    gameOverDiv.style.position = 'absolute';
+    gameOverDiv.style.top = '0';
+    gameOverDiv.style.left = '0';
+    gameOverDiv.style.width = '100%';
+    gameOverDiv.style.height = '100%';
+    gameOverDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    gameOverDiv.style.zIndex = '1000';
+    gameOverDiv.style.display = 'flex';
+    gameOverDiv.style.flexDirection = 'column';
+    gameOverDiv.style.justifyContent = 'center';
+    gameOverDiv.style.alignItems = 'center';
+    gameOverDiv.style.color = 'white';
+    
+    // Add game over text
+    let gameOverText = document.createElement('h1');
+    gameOverText.textContent = 'GAME OVER';
+    gameOverText.style.marginBottom = '20px';
+    
+    // Add retry button
+    let retryButton = document.createElement('button');
+    retryButton.textContent = 'TRY AGAIN';
+    retryButton.className = 'menu_button';
+    retryButton.onclick = function() {
+      document.body.removeChild(gameOverDiv);
+      init();
+    };
+    
+    // Add menu button
+    let menuButton = document.createElement('button');
+    menuButton.textContent = 'MAIN MENU';
+    menuButton.className = 'menu_button';
+    menuButton.style.marginTop = '20px';
+    menuButton.onclick = function() {
+      document.body.removeChild(gameOverDiv);
+      goBackToStartscreen();
+    };
+    
+    // Add elements to overlay
+    gameOverDiv.appendChild(gameOverText);
+    gameOverDiv.appendChild(retryButton);
+    gameOverDiv.appendChild(menuButton);
+    
+    // Add overlay to body
+    document.body.appendChild(gameOverDiv);
   }
 }

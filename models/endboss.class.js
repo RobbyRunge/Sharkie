@@ -53,9 +53,9 @@ class Endboss extends MoveableObject {
   animate() {
     this.animationFrame = 0;
     this.animationStarted = false;
-    setInterval(() => {
+    setStoppableInterval(() => {
+      if (!isGameActive) return;      
       console.log('Character X:', world.character.x); // Debugging line to check character position
-      
       this.checkFirstContact();
       if (this.visible) {
         this.playAnimations();

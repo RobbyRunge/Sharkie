@@ -1,9 +1,19 @@
 let canvas; // Main canvas element
 let world; // Game world object
 let keyboard = new Keyboard(); // Input handler
+let intervalIds = []; // Array to store all interval IDs
+let isGameActive = true; // New flag to track if game is active
+
+function setStoppableInterval(fn, time) {
+  let id = setInterval(fn, time);
+  intervalIds.push(id);
+  return id;
+}
 
 function init() {
   // Initialize game by creating world with canvas and keyboard
+  intervalIds = []; // Reset intervals array
+  isGameActive = true; // Reset game state
   initLevel();
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);

@@ -44,7 +44,8 @@ class Character extends MoveableObject {
   shootingComplete = false; // Flag to indicate when to create the projectile
   canShoot = true; // Flag to prevent multiple shots per animation
   shootingProcessed = false; // Flag to track if shooting has been processed
-
+  currentDeadFrame = 0;
+  deathAnimationComplete = false;
 
   IMAGES_STAND = [
     // Standing/idle animation frames
@@ -177,9 +178,11 @@ class Character extends MoveableObject {
   }
 
   setupControlLoop() {
-    setInterval(() => {
-      this.controlCharacter();
-      this.updateCamera();
+    setStoppableInterval(() => {
+      if (isGameActive) {
+        this.controlCharacter();
+        this.updateCamera();
+      }
     }, 1000 / 160);
   }
 
@@ -188,7 +191,8 @@ class Character extends MoveableObject {
   }
 
   setupAnimationLoop() {
-    setInterval(() => {
+    setStoppableInterval(() => {
+      if (!isGameActive) return;      
       const now = new Date().getTime();
       if (this.isDead()) {
         this.handleDeadAnimation();
@@ -214,7 +218,14 @@ class Character extends MoveableObject {
   }
 
   handleDeadAnimation() {
-    this.playAnimation(this.IMAGES_DEAD);
+    if (this.currentDeadFrame < this.IMAGES_DEAD.length) {
+      this.img = this.imageCache[this.IMAGES_DEAD[this.currentDeadFrame]];
+      this.currentDeadFrame++;
+    } else if (!this.deathAnimationComplete) {
+      this.deathAnimationComplete = true;
+      this.world.stopGame();
+      this.world.showGameOverScreen();
+    }
   }
 
   handleHitAnimation(now) {
