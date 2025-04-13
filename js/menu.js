@@ -6,9 +6,19 @@ function startGame() {
 function goBackToStartscreen() {  
   let startScreenRef = document.getElementById('start_screen');
   startScreenRef.classList.remove('d_none');
+  isGameActive = false;
+  intervalIds.forEach(clearInterval);
+  intervalIds = [];
+  resetWorldState();
   closeOverlay();
   closeFullscreen();
-  isGameActive = false;
+}
+
+function resetWorldState() {
+  if (world) {
+    world.throwableObject = [];
+    world.stopGame();
+  }
 }
 
 function openOverlay(type) {
