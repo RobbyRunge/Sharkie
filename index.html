@@ -25,12 +25,12 @@
   <script src="./js/game.js"></script>
   <script src="./js/menu.js"></script>
 </head>
-<body onload="init()">
+<body onload="init()"> <!-- delete onload before finish -->
   <div id="background_overlay">
     <button id="close_overlay_btn" class="menu_button d_none" onclick="closeOverlay()">CLOSE</button>
   </div>
 
-  <div id="start_screen" class="start_screen d_none">
+  <div id="start_screen" class="start_screen d_none"> <!-- delete d_none before finish -->
     <div class="menu">
       <h1>SHARKIE</h1>
       <button class="menu_button" onclick="startGame(), init()">START GAME</button>
