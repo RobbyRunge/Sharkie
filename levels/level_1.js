@@ -21,7 +21,7 @@ function initLevel() {
     // new Fish(), 
     // new Fish(), 
     // new Fish(),
-    // new Endboss(),
+    new Endboss(),
   ],
   [
     // Array of background objects creating parallax layers
