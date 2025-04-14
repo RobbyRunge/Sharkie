@@ -15,4 +15,4 @@ To install and run Sharkie locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/RobbyRunge/Sharkie.git
+   git clone https://github.com/RobbyRunge/sharkie.git
