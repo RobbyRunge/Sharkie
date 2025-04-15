@@ -44,18 +44,31 @@ class Fish extends MoveableObject {
   };
 
   animate() {
-    // Move left and play swimming animation
-    // this.moveLeft(); 
+    // Store the movement interval ID
+    this.startMoving();
+    // Animation interval
+    this.startAnimation();
+  };
+
+  startMoving() {
+    this.movingInterval = setStoppableInterval(() => {
+      if (isGameActive && !this.isDying) {
+        this.x -= this.speed;
+      }
+    }, 1000 / 60);
+  }
+
+  startAnimation() {
     setStoppableInterval(() => {
       if (isGameActive) {
         if (this.isDying) {
           this.playDeathAnimation();
-        } else {
+        } else { 
           this.playAnimation(this.IMAGES_SWIMMING);
         }
       }
     }, 120);
-  };
+  }
 
   playDeathAnimation() {
     if (this.currentDeadFrame < this.IMAGES_DEAD.length) {
