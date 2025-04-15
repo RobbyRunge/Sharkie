@@ -7,174 +7,25 @@ class Character extends MoveableObject {
   world;
   speed = 1;
   rotation = 0; // Track current rotation angle in degrees
-  idleTime = 0;
-  isInSleepMode = false;
-  sleepCycleComplete = false;
-  currentSleepFrame = 0;
-  isHit = false;
-  hitTime = 0;
-  hitDuration = 100; // Duration of hit animation in ms
-  animationSpeed = {
-    swimming: 100,
-    standing: 150,
-    sleeping: 300,
-    hit: 100, // Add hit animation speed
-    slapping: 70,
-    shooting: 50
-  };
-  lastAnimationUpdate = {
-    swimming: 0,
-    standing: 0,
-    sleeping: 0,
-    hit: 0, // Add hit animation timestamp
-    slapping: 0,
-    shooting: 0
-  };
   bottles = 5; // Track collected poison bottles
   maxBottles = 5; // Maximum number of bottles to collect
   coins = 0;
   maxCoins = 5;
-  currentSlapFrame = 0;
-  slapTime = 0;
-  slapComplete = false;
-  isShooting = false;
-  currentShootingFrame = 0; // Track current shooting frame
-  shootingTime = 0;
-  shootingDuration = 350; // Duration of shooting animation in ms
-  shootingComplete = false; // Flag to indicate when to create the projectile
-  canShoot = true; // Flag to prevent multiple shots per animation
-  shootingProcessed = false; // Flag to track if shooting has been processed
-  currentDeadFrame = 0;
-  deathAnimationComplete = false;
+  animation; // Instance of CharacterAnimation
 
-  IMAGES_STAND = [
-    // Standing/idle animation frames
-    './img/1.Sharkie/1.IDLE/1.png',
-    './img/1.Sharkie/1.IDLE/2.png',
-    './img/1.Sharkie/1.IDLE/3.png',
-    './img/1.Sharkie/1.IDLE/4.png',
-    './img/1.Sharkie/1.IDLE/5.png',
-    './img/1.Sharkie/1.IDLE/6.png',
-    './img/1.Sharkie/1.IDLE/7.png',
-    './img/1.Sharkie/1.IDLE/8.png',
-    './img/1.Sharkie/1.IDLE/9.png',
-    './img/1.Sharkie/1.IDLE/10.png',
-    './img/1.Sharkie/1.IDLE/11.png',
-    './img/1.Sharkie/1.IDLE/12.png',
-    './img/1.Sharkie/1.IDLE/13.png',
-    './img/1.Sharkie/1.IDLE/14.png',
-    './img/1.Sharkie/1.IDLE/15.png',
-    './img/1.Sharkie/1.IDLE/16.png',
-    './img/1.Sharkie/1.IDLE/17.png',
-    './img/1.Sharkie/1.IDLE/18.png'
-  ];
-
-  IMAGES_SWIMMING = [
-    // Swimming animation frames
-    './img/1.Sharkie/3.Swim/1.png',
-    './img/1.Sharkie/3.Swim/2.png',
-    './img/1.Sharkie/3.Swim/3.png',
-    './img/1.Sharkie/3.Swim/4.png',
-    './img/1.Sharkie/3.Swim/5.png',
-    './img/1.Sharkie/3.Swim/6.png'
-  ];
-
-  IMAGES_SLEEP = [
-    // Sleeping animation frames
-    './img/1.Sharkie/2.Long_IDLE/i1.png',
-    './img/1.Sharkie/2.Long_IDLE/I2.png',
-    './img/1.Sharkie/2.Long_IDLE/I3.png',
-    './img/1.Sharkie/2.Long_IDLE/I4.png',
-    './img/1.Sharkie/2.Long_IDLE/I5.png',
-    './img/1.Sharkie/2.Long_IDLE/I6.png',
-    './img/1.Sharkie/2.Long_IDLE/I7.png',
-    './img/1.Sharkie/2.Long_IDLE/I8.png',
-    './img/1.Sharkie/2.Long_IDLE/I9.png',
-    './img/1.Sharkie/2.Long_IDLE/I10.png',
-    './img/1.Sharkie/2.Long_IDLE/I11.png',
-    './img/1.Sharkie/2.Long_IDLE/I12.png',
-    './img/1.Sharkie/2.Long_IDLE/I13.png',
-    './img/1.Sharkie/2.Long_IDLE/I14.png'
-  ];
-
-  IMAGES_HIT = [
-    // Hit animation frames
-    './img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
-    './img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
-    './img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
-    './img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
-  ];
-
-  IMAGES_SHOOTING = [
-    // Shoot animation frames
-    // first 7 pictures without bubble
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/1.png',
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/2.png',
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/3.png',
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/4.png',
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/5.png',
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/6.png',
-    // './img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png'
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png',
-    'img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
-  ];
-
-  IMAGES_SLAP = [
-    'img/1.Sharkie/4.Attack/Fin slap/1.png',
-    'img/1.Sharkie/4.Attack/Fin slap/2.png',
-    'img/1.Sharkie/4.Attack/Fin slap/3.png',
-    'img/1.Sharkie/4.Attack/Fin slap/4.png',
-    'img/1.Sharkie/4.Attack/Fin slap/5.png',
-    'img/1.Sharkie/4.Attack/Fin slap/6.png',
-    'img/1.Sharkie/4.Attack/Fin slap/7.png',
-    'img/1.Sharkie/4.Attack/Fin slap/8.png',
-    'img/1.Sharkie/4.Attack/Fin slap/4.png',
-    'img/1.Sharkie/4.Attack/Fin slap/3.png',
-    'img/1.Sharkie/4.Attack/Fin slap/2.png',
-    'img/1.Sharkie/4.Attack/Fin slap/1.png',
-  ];
-
-  IMAGES_DEAD = [
-    // Dead animation frames
-    './img/1.Sharkie/6.dead/1.Poisoned/1.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/2.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/3.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/4.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/5.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/6.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/7.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/8.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/9.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/10.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/11.png',
-    './img/1.Sharkie/6.dead/1.Poisoned/12.png',
-  ];
-  
   constructor() {
-    super().loadImage(this.IMAGES_STAND[0]);
-    this.loadImages(this.IMAGES_STAND);
-    this.loadImages(this.IMAGES_SWIMMING);
-    this.loadImages(this.IMAGES_SLEEP);
-    this.loadImages(this.IMAGES_HIT);
-    this.loadImages(this.IMAGES_SHOOTING);
-    this.loadImages(this.IMAGES_SLAP);
-    this.loadImages(this.IMAGES_DEAD);
+    super();
     this.offsetTop = 95;
     this.offsetBottom = 45;
     this.offsetX = 40;
     this.offsetY = 40; 
+    this.animation = new CharacterAnimation(this);
     this.animate();
   }
 
   animate() {
     this.setupControlLoop();
-    this.setupAnimationLoop();
+    this.animation.animate();
   }
 
   setupControlLoop() {
@@ -190,234 +41,11 @@ class Character extends MoveableObject {
     this.world.camera_x = -this.x + 100;
   }
 
-  setupAnimationLoop() {
-    setStoppableInterval(() => {
-      if (!isGameActive) return;      
-      const now = new Date().getTime();
-      if (this.isDead()) {
-        this.handleDeadAnimation();
-      } else if (this.isHit) {
-        this.handleHitAnimation(now);
-      } else if (this.isSlapping) {
-        this.handleSlapingAnimation(now);
-      } else if (this.isShooting) {
-        this.handleShootingAnimation(now);
-      } else if (this.isMoving()) {
-        this.handleMovementAnimation(now);
-      } else {
-        this.handleIdleAnimation(now);
-      }
-    }, 100);
-  }
-
   isMoving() {
     return this.world.keyboard.RIGHT || 
            this.world.keyboard.LEFT || 
            this.world.keyboard.UP || 
            this.world.keyboard.DOWN;
-  }
-
-  handleDeadAnimation() {
-    if (this.currentDeadFrame < this.IMAGES_DEAD.length) {
-      this.img = this.imageCache[this.IMAGES_DEAD[this.currentDeadFrame]];
-      this.currentDeadFrame++;
-    } else if (!this.deathAnimationComplete) {
-      this.deathAnimationComplete = true;
-      this.world.stopGame();
-      this.world.showGameOverScreen();
-    }
-  }
-
-  handleHitAnimation(now) {
-    if (now - this.lastAnimationUpdate.hit >= this.animationSpeed.hit) {
-      this.playAnimation(this.IMAGES_HIT);
-      this.lastAnimationUpdate.hit = now;
-      this.hitTime += 100;
-      if (this.hitTime >= this.hitDuration) {
-        this.isHit = false;
-        this.hitTime = 0;
-      }
-    }
-  }
-
-  startSlapping() {
-    if (!this.isSlapping) {
-      this.idleTime = 0;
-      this.isInSleepMode = false;
-      this.sleepCycleComplete = false;
-      this.currentSleepFrame = 0;
-      this.isSlapping = true;
-      this.currentSlapFrame = 0;
-      this.slapComplete = false;
-      return true;
-    }
-    return false;
-  }
-
-  handleSlapingAnimation(now) {
-    if (this.shouldSkipSlapAnimationUpdate(now)) return;
-    this.updateSlapAnimationTimestamp(now);
-    this.advanceSlapFrame();
-    this.checkForSlapAnimationCompletion();
-  }
-
-  shouldSkipSlapAnimationUpdate(now) {
-    const timeElapsed = now - this.lastAnimationUpdate.slapping;
-    return timeElapsed < this.animationSpeed.slapping;
-  }
-
-  updateSlapAnimationTimestamp(now) {
-    this.lastAnimationUpdate.slapping = now;
-  }
-
-  advanceSlapFrame() {
-    if (this.currentSlapFrame < this.IMAGES_SLAP.length) {
-      this.img = this.imageCache[this.IMAGES_SLAP[this.currentSlapFrame]];
-      this.currentSlapFrame++;
-    }
-  }
-
-  checkForSlapAnimationCompletion() {
-    if (this.currentSlapFrame >= this.IMAGES_SLAP.length) {
-      this.resetSlapState();
-    }
-  }
-
-  resetSlapState() {
-    this.isSlapping = false;
-    this.currentSlapFrame = 0;
-  }
-
-  handleShootingAnimation(now) {
-    if (this.shouldSkipAnimationUpdate(now)) return;
-    this.updateAnimationTimestamp(now);
-    this.advanceShootingFrame();
-    this.trackAnimationProgress();
-    this.checkForAnimationCompletion();
-    this.checkForAnimationReset();
-  }
-  
-  shouldSkipAnimationUpdate(now) {
-    const timeElapsed = now - this.lastAnimationUpdate.shooting;
-    return timeElapsed < this.animationSpeed.shooting;
-  }
-  
-  updateAnimationTimestamp(now) {
-    this.lastAnimationUpdate.shooting = now;
-  }
-  
-  advanceShootingFrame() {
-    if (this.currentShootingFrame < this.IMAGES_SHOOTING.length) {
-      this.img = this.imageCache[this.IMAGES_SHOOTING[this.currentShootingFrame]];
-      this.currentShootingFrame++; // Move to next frame
-    }
-  }
-  
-  trackAnimationProgress() {
-    this.shootingTime += 100;
-  }
-  
-  checkForAnimationCompletion() {
-    if (this.currentShootingFrame >= this.IMAGES_SHOOTING.length - 1 && !this.shootingComplete) {
-      this.shootingComplete = true;
-    }
-  }
-  
-  checkForAnimationReset() {
-    if (this.currentShootingFrame >= this.IMAGES_SHOOTING.length) {
-      this.resetShootingState();
-    }
-  }
-  
-  // Helper method to reset all shooting-related state
-  resetShootingState() {
-    // Reset idle time when moving
-    this.idleTime = 0;
-    this.isInSleepMode = false;
-    this.sleepCycleComplete = false;
-    this.currentSleepFrame = 0;
-    this.isShooting = false;
-    this.shootingTime = 0;
-    this.shootingComplete = false;
-    this.shootingProcessed = false;
-    this.currentShootingFrame = 0; // Reset frame index
-    setTimeout(() => {
-      this.canShoot = true;
-    }, 200);
-  }
-
-  handleMovementAnimation(now) {
-    // Reset idle time when moving
-    this.idleTime = 0;
-    this.isInSleepMode = false;
-    this.sleepCycleComplete = false;
-    this.currentSleepFrame = 0;
-    // Update swimming animation at swimming speed
-    if (now - this.lastAnimationUpdate.swimming >= this.animationSpeed.swimming) {
-      this.playAnimation(this.IMAGES_SWIMMING);
-      this.lastAnimationUpdate.swimming = now;
-    }
-  }
-
-  handleIdleAnimation(now) {
-    // Character is idle
-    this.updateIdleState();
-    if (this.isInSleepMode) {
-      this.playSlowSleepAnimation(now);
-    } else {
-      this.playStandingAnimation(now);
-    }
-  }
-
-  updateIdleState() {
-    this.idleTime += 100; // Add 100ms to idle time
-    if (this.idleTime > 5000 && !this.isInSleepMode) {
-      // After 5 seconds of idle time, start sleep animation
-      this.isInSleepMode = true;
-      this.sleepCycleComplete = false;
-      this.currentSleepFrame = 0;
-    }
-  }
-
-  playSlowSleepAnimation(now) {
-    // Only update animation when enough time has passed
-    if (now - this.lastAnimationUpdate.sleeping >= this.animationSpeed.sleeping) {
-      this.lastAnimationUpdate.sleeping = now;
-      if (!this.sleepCycleComplete) {
-        this.playInitialSleepAnimation();
-      } else {
-        this.playLoopingSleepAnimation();
-      }
-    }
-  }
-  
-  playInitialSleepAnimation() {
-    // First cycle: Play full animation
-    this.img = this.imageCache[this.IMAGES_SLEEP[this.currentSleepFrame]];
-    this.currentSleepFrame++;
-    // Check if first cycle is complete
-    if (this.currentSleepFrame >= this.IMAGES_SLEEP.length) {
-      this.sleepCycleComplete = true;
-      this.currentSleepFrame = 10; // Index for frame 11
-    }
-  }
-  
-  playLoopingSleepAnimation() {
-    // After first cycle: Only play frames 11-14
-    this.img = this.imageCache[this.IMAGES_SLEEP[this.currentSleepFrame]];
-    this.currentSleepFrame++; 
-    // Loop between frames 10-14 (indices 10-13)
-    if (this.currentSleepFrame > 13) {
-      this.currentSleepFrame = 10;
-    }
-  }
-
-  playStandingAnimation(now) {
-    // Update standing animation at standing speed
-    if (now - this.lastAnimationUpdate.standing >= this.animationSpeed.standing) {
-      this.playAnimation(this.IMAGES_STAND);
-      this.lastAnimationUpdate.standing = now;
-    }
   }
 
   controlCharacter() {
@@ -471,11 +99,17 @@ class Character extends MoveableObject {
   }
 
   hit() {
-    if (!this.isDead() && !this.isHit) {
-      this.isHit = true;
-      this.hitTime = 0;
+    if (this.animation.triggerHit()) {
       super.hit();
     }
+  }
+
+  startSlapping() {
+    return this.animation.startSlapping();
+  }
+
+  startShooting() {
+    return this.animation.startShooting();
   }
 
   collectBottle() {
@@ -502,17 +136,7 @@ class Character extends MoveableObject {
     return false; // No bottles available
   }
 
-  startShooting() {
-    // Only start shooting if we have bottles and aren't already shooting
-    if (this.bottles > 0 && !this.isShooting && this.canShoot) {
-      this.isShooting = true;
-      this.canShoot = false;
-      this.shootingComplete = false;
-      this.shootingProcessed = false;
-      this.shootingTime = 0;
-      this.currentShootingFrame = 0; // Reset frame index when starting new shot
-      return true;
-    }
-    return false;
+  playAnimation(images) {
+    this.animation.playCharacterAnimation(images);
   }
 }

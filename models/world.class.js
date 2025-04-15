@@ -64,13 +64,13 @@ class World {
   
   checkCreateProjectile() {
     const canCreateProjectile = 
-      this.character.shootingComplete && 
-      !this.character.shootingProcessed && 
+      this.character.animation.shootingComplete && 
+      !this.character.animation.shootingProcessed && 
       this.character.useBottle();
     if (canCreateProjectile) {
       this.createAndAddProjectile();
       this.updatePoisonBar();
-      this.character.shootingProcessed = true;
+      this.character.animation.shootingProcessed = true;
     }
   }
   
@@ -116,9 +116,9 @@ class World {
   }
   
   isSlapActive() {
-    return this.character.isSlapping && 
-           this.character.currentSlapFrame >= 4 && 
-           this.character.currentSlapFrame <= 7;
+    return this.character.animation.isSlapping && 
+           this.character.animation.currentSlapFrame >= 4 && 
+           this.character.animation.currentSlapFrame <= 7;
   }
   
   getSlapPosition() {
