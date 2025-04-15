@@ -314,52 +314,18 @@ class World {
   
   
   showGameOverScreen() {
-    // Create game over overlay
-    let gameOverDiv = document.createElement('div');
-    gameOverDiv.id = 'game_over_screen';
-    gameOverDiv.style.position = 'absolute';
-    gameOverDiv.style.top = '0';
-    gameOverDiv.style.left = '0';
-    gameOverDiv.style.width = '100%';
-    gameOverDiv.style.height = '100%';
-    gameOverDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    gameOverDiv.style.zIndex = '1000';
-    gameOverDiv.style.display = 'flex';
-    gameOverDiv.style.flexDirection = 'column';
-    gameOverDiv.style.justifyContent = 'center';
-    gameOverDiv.style.alignItems = 'center';
-    gameOverDiv.style.color = 'white';
+    // Insert template into DOM
+    document.body.insertAdjacentHTML('beforeend', getGameOverTemplate());
     
-    // Add game over text
-    let gameOverText = document.createElement('h1');
-    gameOverText.textContent = 'GAME OVER';
-    gameOverText.style.marginBottom = '20px';
-    
-    // Add retry button
-    let retryButton = document.createElement('button');
-    retryButton.textContent = 'TRY AGAIN';
-    retryButton.className = 'menu_button';
-    retryButton.onclick = function() {
-      document.body.removeChild(gameOverDiv);
+    // Add event listeners
+    document.getElementById('retry_button').addEventListener('click', () => {
+      document.getElementById('game_over_screen').remove();
       init();
-    };
+    });
     
-    // Add menu button
-    let menuButton = document.createElement('button');
-    menuButton.textContent = 'MAIN MENU';
-    menuButton.className = 'menu_button';
-    menuButton.style.marginTop = '20px';
-    menuButton.onclick = function() {
-      document.body.removeChild(gameOverDiv);
+    document.getElementById('menu_button').addEventListener('click', () => {
+      document.getElementById('game_over_screen').remove();
       goBackToStartscreen();
-    };
-    
-    // Add elements to overlay
-    gameOverDiv.appendChild(gameOverText);
-    gameOverDiv.appendChild(retryButton);
-    gameOverDiv.appendChild(menuButton);
-    
-    // Add overlay to body
-    document.body.appendChild(gameOverDiv);
+    });
   }
 }
