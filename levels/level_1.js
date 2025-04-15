@@ -4,19 +4,19 @@ function initLevel() {
   level_1 = new Level(
   [
     // Add coins to the level
-    new Coin(),
-    new Coin(),
-    new Coin(),
-    new Coin(),
-    new Coin(),
-    new Coin(),
+    // new Coin(),
+    // new Coin(),
+    // new Coin(),
+    // new Coin(),
+    // new Coin(),
+    // new Coin(),
     // Add poison bottles to the level
-    new Posion(),
-    new Posion(),
-    new Posion(),
-    new Posion(),
-    new Posion(),
-    new Posion(),
+    // new Posion(),
+    // new Posion(),
+    // new Posion(),
+    // new Posion(),
+    // new Posion(),
+    // new Posion(),
     // Array of enemies (fish and endboss)
     new Fish(), 
     new Fish(), 

@@ -4,6 +4,9 @@ class Fish extends MoveableObject {
   x = 0;
   height = 80;
   y = 200;
+  isDying = false;
+  currentDeadFrame = 0;
+  deathAnimationComplete = false;
   
   IMAGES_SWIMMING = [
     // Swimming animation frames
@@ -15,6 +18,13 @@ class Fish extends MoveableObject {
     './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/1.swim4.png',
     './img/2.Enemy/1.Puffer_fish(3_color_options)/2.transition/1.transition3.png',
     './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/1.swim2.png',
+  ];
+
+  IMAGES_DEAD = [
+    // Dead animation frames
+    'img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_1.png',
+    'img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_1_2.png',
+    'img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_1_3.png',
   ];
 
   constructor() {
@@ -29,16 +39,36 @@ class Fish extends MoveableObject {
     this.offsetTop = 0;
     this.offsetBottom = 20; 
     this.loadImages(this.IMAGES_SWIMMING);
+    this.loadImages(this.IMAGES_DEAD);
     this.animate();
   };
 
   animate() {
     // Move left and play swimming animation
-    this.moveLeft();
+    // this.moveLeft(); 
     setStoppableInterval(() => {
       if (isGameActive) {
-        this.playAnimation(this.IMAGES_SWIMMING);
+        if (this.isDying) {
+          this.playDeathAnimation();
+        } else {
+          this.playAnimation(this.IMAGES_SWIMMING);
+        }
       }
     }, 120);
   };
+
+  playDeathAnimation() {
+    if (this.currentDeadFrame < this.IMAGES_DEAD.length) {
+      this.img = this.imageCache[this.IMAGES_DEAD[this.currentDeadFrame]];
+      this.currentDeadFrame++;
+    } else if (!this.deathAnimationComplete) {
+      this.deathAnimationComplete = true;
+    }
+  }
+
+  die() {
+    this.isDying = true;
+    this.currentDeadFrame = 0;
+    this.deathAnimationComplete = false;
+  }
 }

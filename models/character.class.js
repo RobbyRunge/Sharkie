@@ -30,7 +30,7 @@ class Character extends MoveableObject {
     slapping: 0,
     shooting: 0
   };
-  bottles = 0; // Track collected poison bottles
+  bottles = 5; // Track collected poison bottles
   maxBottles = 5; // Maximum number of bottles to collect
   coins = 0;
   maxCoins = 5;

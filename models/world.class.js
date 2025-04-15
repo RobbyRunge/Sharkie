@@ -21,6 +21,11 @@ class World {
     this.run();
     this.updatePoisonBar(); // Initialize poison bar
     this.updateCoinBar(); // Initialize coin bar
+
+    // Slap attack parameters
+    this.SLAP_RANGE = 30; // Horizontal reach of slap attack
+    this.SLAP_VERTICAL_OFFSET_TOP = 10; // Vertical offset from top of character
+    this.SLAP_VERTICAL_OFFSET_BOTTOM = 10; // Vertical offset from bottom of character
   }
 
   setWorld() {
@@ -33,6 +38,9 @@ class World {
       this.checkCollisions();
       this.checkThrowObjects();
       this.checkSlapping();
+      this.checkThrowableCollisions(); 
+      this.checkSlapCollisions();
+      this.cleanupDeadFish(); // Add this line to clean up dead fish
     }, 100);
   }
 
@@ -43,23 +51,34 @@ class World {
   }
 
   checkThrowObjects() {
+    this.checkStartShooting();
+    this.checkCreateProjectile();
+  }
+  
+  checkStartShooting() {
     // Start shooting animation when D is pressed
     if (this.keyboard.D && this.character.startShooting()) {
       // The animation is started, but no projectile yet
     }
-    
-    // Create projectile when shooting animation is at the right point
-    if (this.character.shootingComplete && !this.character.shootingProcessed && this.character.useBottle()) {
-      // Create the projectile
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-      this.throwableObject.push(bottle);
-      
-      // Update the poison bar to reflect the used bottle
+  }
+  
+  checkCreateProjectile() {
+    const canCreateProjectile = 
+      this.character.shootingComplete && 
+      !this.character.shootingProcessed && 
+      this.character.useBottle();
+    if (canCreateProjectile) {
+      this.createAndAddProjectile();
       this.updatePoisonBar();
-      
-      // Mark as processed to prevent multiple projectiles
       this.character.shootingProcessed = true;
     }
+  }
+  
+  createAndAddProjectile() {
+    const projectileX = this.character.x + 100;
+    const projectileY = this.character.y + 100;
+    let bottle = new ThrowableObject(projectileX, projectileY);
+    this.throwableObject.push(bottle);
   }
 
   checkCollisions() {
@@ -76,6 +95,71 @@ class World {
     });
   }
   
+  checkThrowableCollisions() {
+    this.throwableObject.forEach((bottle, bottleIndex) => {
+      this.level.enemies.forEach((enemy) => {
+        if (bottle.isColliding(enemy) && enemy instanceof Fish && !enemy.isDying) {
+          enemy.die();
+          this.throwableObject.splice(bottleIndex, 1);
+        }
+      });
+    });
+  }
+
+  checkSlapCollisions() {
+    if (this.isSlapActive()) {
+      const slapX = this.getSlapPosition();
+      this.level.enemies.forEach((enemy) => {
+        this.checkEnemySlapCollision(enemy, slapX);
+      });
+    }
+  }
+  
+  isSlapActive() {
+    return this.character.isSlapping && 
+           this.character.currentSlapFrame >= 4 && 
+           this.character.currentSlapFrame <= 7;
+  }
+  
+  getSlapPosition() {
+    return this.character.otherDirection ? 
+      this.character.x - this.SLAP_RANGE : // Left slap
+      this.character.x + this.character.width; // Right slap
+  }
+  
+  checkEnemySlapCollision(enemy, slapX) {
+    if (enemy instanceof Fish) {
+      if (this.isInSlapRange(enemy, slapX)) {
+        enemy.die();
+      }
+    }
+  }
+  
+  isInSlapRange(enemy, slapX) {
+    return this.isInHorizontalSlapRange(enemy, slapX) && 
+           this.isInVerticalSlapRange(enemy);
+  }
+  
+  isInHorizontalSlapRange(enemy, slapX) {
+    return this.character.otherDirection ? 
+      (enemy.x + enemy.width >= slapX && enemy.x <= this.character.x) : // Left slap range
+      (enemy.x <= slapX + this.SLAP_RANGE && enemy.x + enemy.width >= slapX); // Right slap range
+  }
+  
+  isInVerticalSlapRange(enemy) {
+    return enemy.y + enemy.height >= this.character.y + this.SLAP_VERTICAL_OFFSET_TOP && 
+           enemy.y <= this.character.y + this.character.height - this.SLAP_VERTICAL_OFFSET_BOTTOM;
+  }
+
+  cleanupDeadFish() {
+    for (let i = this.level.enemies.length - 1; i >= 0; i--) {
+      const enemy = this.level.enemies[i];
+      if (enemy instanceof Fish && enemy.deathAnimationComplete) {
+        this.level.enemies.splice(i, 1);
+      }
+    }
+  }
+
   handlePoisonCollision(poisonBottle) {
     if (this.character.collectBottle()) {
       this.removeFromLevel(poisonBottle);
