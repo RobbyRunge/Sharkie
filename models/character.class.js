@@ -98,9 +98,9 @@ class Character extends MoveableObject {
     }
   }
 
-  hit() {
-    if (this.animation.triggerHit()) {
-      super.hit();
+  hit(hitType = 'poison', damage = 5) {
+    if (this.animation.triggerHit(hitType)) {
+      super.hit(damage);
     }
   }
 

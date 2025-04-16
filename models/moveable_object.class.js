@@ -23,11 +23,11 @@ class MoveableObject extends DrawableObject {
             (this.y + topOffset) <= (moveableObject.y + moveableObject.height);
   }
 
-  hit() {
+  hit(damage = 5) {
     this.playAnimation(this.IMAGES_HIT);
-    this.energy -= 5;
+    this.energy -= damage;
     if (this.energy < 0) {
-      this.energy = 0
+      this.energy = 0;
     }
   }
 

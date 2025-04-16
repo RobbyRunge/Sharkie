@@ -54,6 +54,12 @@ class CharacterAnimation {
     './img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
   ];
 
+  IMAGES_HIT_ELECTRIC = [
+    './img/1.Sharkie/5.Hurt/2.Electric shock/1.png',
+    './img/1.Sharkie/5.Hurt/2.Electric shock/2.png',
+    './img/1.Sharkie/5.Hurt/2.Electric shock/3.png',
+  ];
+
   IMAGES_SHOOTING = [
     'img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png',
     'img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png',
@@ -103,6 +109,7 @@ class CharacterAnimation {
   isHit = false;
   hitTime = 0;
   hitDuration = 100;
+  hitType = 'poison'; // Default hit type
   isSlapping = false;
   currentSlapFrame = 0;
   slapComplete = false;
@@ -148,6 +155,7 @@ class CharacterAnimation {
     this.character.loadImages(this.IMAGES_SWIMMING);
     this.character.loadImages(this.IMAGES_SLEEP);
     this.character.loadImages(this.IMAGES_HIT);
+    this.character.loadImages(this.IMAGES_HIT_ELECTRIC);
     this.character.loadImages(this.IMAGES_SHOOTING);
     this.character.loadImages(this.IMAGES_SLAP);
     this.character.loadImages(this.IMAGES_DEAD);
@@ -192,7 +200,12 @@ class CharacterAnimation {
 
   handleHitAnimation(now) {
     if (now - this.lastAnimationUpdate.hit >= this.animationSpeed.hit) {
-      this.playCharacterAnimation(this.IMAGES_HIT);
+      // Choose animation based on hit type
+      if (this.hitType === 'electric') {
+        this.playCharacterAnimation(this.IMAGES_HIT_ELECTRIC);
+      } else {
+        this.playCharacterAnimation(this.IMAGES_HIT);
+      }
       this.lastAnimationUpdate.hit = now;
       this.hitTime += 100;
       if (this.hitTime >= this.hitDuration) {
@@ -407,10 +420,11 @@ class CharacterAnimation {
   }
 
   // Trigger hit animation and state
-  triggerHit() {
+  triggerHit(hitType = 'poison') {
     if (!this.character.isDead() && !this.isHit) {
       this.isHit = true;
       this.hitTime = 0;
+      this.hitType = hitType; // Set the hit type
       return true;
     }
     return false;

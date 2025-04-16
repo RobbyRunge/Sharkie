@@ -89,7 +89,7 @@ class World {
         } else if (enemy instanceof Coin) {
           this.handleCoinCollision(enemy);
         } else {
-          this.handleEnemyCollision();
+          this.handleEnemyCollision(enemy);
         }
       }
     });
@@ -174,8 +174,17 @@ class World {
     }
   }
   
-  handleEnemyCollision() {
-    this.character.hit();
+  handleEnemyCollision(enemy) {
+    // Determine hit type and damage based on enemy
+    let hitType = 'poison'; 
+    let damage = 5; // Default damage
+    
+    if (enemy instanceof GreenJellyFish || enemy instanceof PinkJellyFish) {
+      hitType = 'electric';
+      damage = 15; // Higher damage for electric jellyfish
+    }
+    
+    this.character.hit(hitType, damage);
     this.statusBar.setPercentage(this.character.energy);
   }
   
