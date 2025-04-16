@@ -35,6 +35,14 @@ class MoveableObject extends DrawableObject {
     return this.energy == 0;
   }
 
+  startMovement() {
+    setStoppableInterval(() => {
+        if (isGameActive && !this.isDying) {
+            this.x -= this.speed;
+        }
+    }, 1000/60);
+}
+
   playAnimation(images) {
     // Only animate if game is active and images array exists
     if (!isGameActive || !images || !Array.isArray(images)) return;    
@@ -43,17 +51,5 @@ class MoveableObject extends DrawableObject {
     let path = images[index];
     this.img = this.imageCache[path];
     this.currentImage++;
-  }
-
-  moveRight() {
-    // Move object right
-    console.log("Moving Right");
-  }
-
-  moveLeft() {
-    // Move object left continuously
-    setInterval(() => {
-      this.x -= this.speed;
-    }, 1000 / 60);
   }
 }

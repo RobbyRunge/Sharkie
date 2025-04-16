@@ -15,7 +15,7 @@ class Posion extends MoveableObject {
     this.loadImage(this.IMAGES_POSION[0]);
     this.loadImages(this.IMAGES_POSION);
     // Position at a random location in the game world
-    this.x = 300 + Math.random() * 250; // Random x position
+    this.x = 300 + Math.random() * 2000; // Random x position
     this.y = 50 + Math.random() * 300;   // Random y position
     // Size appropriate for collectible
     this.width = 60;

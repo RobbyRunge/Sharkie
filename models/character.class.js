@@ -7,7 +7,7 @@ class Character extends MoveableObject {
   world;
   speed = 1;
   rotation = 0; // Track current rotation angle in degrees
-  bottles = 5; // Track collected poison bottles
+  bottles = 0; // Track collected poison bottles
   maxBottles = 5; // Maximum number of bottles to collect
   coins = 0;
   maxCoins = 5;

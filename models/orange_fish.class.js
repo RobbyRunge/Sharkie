@@ -28,7 +28,7 @@ class OrangeFish extends DestructibleEnemy {
     // Initialize with random position and speed
     super();
     this.loadImage(this.IMAGES_SWIMMING[0]);
-    this.x = 200 + Math.random() * 500;
+    this.x = 200 + Math.random() * 2500;
     this.y = 0 + Math.random() * 410;
     this.speed = 0.15 + Math.random() * 0.5;
     // Use specific directional offsets
@@ -38,6 +38,7 @@ class OrangeFish extends DestructibleEnemy {
     this.offsetBottom = 20; 
     this.loadImages(this.IMAGES_SWIMMING);
     this.loadImages(this.IMAGES_DEAD);
+    this.startMovement();
     this.animate();
   }
 

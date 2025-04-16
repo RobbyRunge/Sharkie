@@ -4,27 +4,34 @@ function initLevel() {
   level_1 = new Level(
   [
     // Add coins to the level
-    // new Coin(),
-    // new Coin(),
-    // new Coin(),
-    // new Coin(),
-    // new Coin(),
-    // new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
     // Add poison bottles to the level
-    // new Posion(),
-    // new Posion(),
-    // new Posion(),
-    // new Posion(),
-    // new Posion(),
-    // new Posion(),
+    new Posion(),
+    new Posion(),
+    new Posion(),
+    new Posion(),
+    new Posion(),
+    new Posion(),
     // Array of enemies (fish and endboss)
     new GreenFish(), 
+    new GreenFish(), 
+    new OrangeFish(),
     new OrangeFish(),
     new RedFish(),
+    new RedFish(),
+    new LilaJellyFish(),
     new LilaJellyFish(),
     new YellowJellyFish(),
-    new GreenJellyFish(),
-    new PinkJellyFish(),
+    new YellowJellyFish(),
+    new GreenJellyFish(), // strobg enemy
+    new GreenJellyFish(), // strobg enemy
+    new PinkJellyFish(), // strong enemy
+    new PinkJellyFish(), // strong enemy
     new Endboss(),
   ],
   [
