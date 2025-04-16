@@ -27,7 +27,10 @@ function initLevel() {
     // new RedFish(),
     // new RedFish(),
     // new RedFish(),
-    new LilaJellyFish(),
+    // new LilaJellyFish(),
+    // new YellowJellyFish(),
+    // new GreenJellyFish(),
+    // new PinkJellyFish(),
     new Endboss(),
   ],
   [

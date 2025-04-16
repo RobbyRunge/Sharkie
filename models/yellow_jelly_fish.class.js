@@ -1,24 +1,24 @@
-class YellowJellyFish extends DestructibleEnemy {
+class LilaJellyFish extends DestructibleEnemy {
   // Enemy fish with swimming animation
-  width = 70;
+  width = 50;
   x = 0;
-  height = 70;
+  height = 50;
   y = 200;
   
   IMAGES_SWIMMING = [
     // Swimming animation frames
-    './img/2.Enemy/2.Jelly_fish/Regular damage/Lila 1.png',
-    './img/2.Enemy/2.Jelly_fish/Regular damage/Lila 2.png',
-    './img/2.Enemy/2.Jelly_fish/Regular damage/Lila 3.png',
-    './img/2.Enemy/2.Jelly_fish/Regular damage/Lila 4.png'
+    './img/2.Enemy/2.Jelly_fish/Regular damage/Yellow 2.png',
+    './img/2.Enemy/2.Jelly_fish/Regular damage/Yellow 3.png',
+    './img/2.Enemy/2.Jelly_fish/Regular damage/Yellow 4.png',
+    './img/2.Enemy/2.Jelly_fish/Regular damage/Yellow 1.png'
   ];
 
   IMAGES_DEAD = [
     // Dead animation frames
-    './img/2.Enemy/2.Jelly_fish/Dead/Lila/L1.png',
-    './img/2.Enemy/2.Jelly_fish/Dead/Lila/L2.png',
-    './img/2.Enemy/2.Jelly_fish/Dead/Lila/L3.png',
-    './img/2.Enemy/2.Jelly_fish/Dead/Lila/L4.png',
+    './img/2.Enemy/2.Jelly_fish/Dead/Yellow/y1.png',
+    './img/2.Enemy/2.Jelly_fish/Dead/Yellow/y2.png',
+    './img/2.Enemy/2.Jelly_fish/Dead/Yellow/y3.png',
+    './img/2.Enemy/2.Jelly_fish/Dead/Yellow/y4.png',
   ];
 
   constructor() {
