@@ -1,4 +1,4 @@
-class OrangeFish extends DestructibleEnemy {
+class RedFish extends DestructibleEnemy {
   // Enemy fish with swimming animation
   width = 80;
   x = 0;
@@ -7,21 +7,21 @@ class OrangeFish extends DestructibleEnemy {
   
   IMAGES_SWIMMING = [
     // Swimming animation frames
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/2.transition/2.transition3.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim2.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim1.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim2.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim3.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim4.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim5.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/2.swim4.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim4.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim5.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim4.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/2.transition/3.transition3.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim2.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim1.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim2.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/1.Swim/3.swim3.png',
   ];
 
   IMAGES_DEAD = [
     // Dead animation frames
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_2_1.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_2_2.png',
-    './img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_2_3.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_3_1.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_3_2.png',
+    './img/2.Enemy/1.Puffer_fish(3_color_options)/4.DIE/dead_fish_3_3.png',
   ];
 
   constructor() {

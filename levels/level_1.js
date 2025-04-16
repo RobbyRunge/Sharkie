@@ -24,6 +24,9 @@ function initLevel() {
     new OrangeFish(),
     new OrangeFish(),
     new OrangeFish(),
+    new RedFish(),
+    new RedFish(),
+    new RedFish(),
     new Endboss(),
   ],
   [
