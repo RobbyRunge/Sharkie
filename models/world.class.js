@@ -98,7 +98,7 @@ class World {
   checkThrowableCollisions() {
     this.throwableObject.forEach((bottle, bottleIndex) => {
       this.level.enemies.forEach((enemy) => {
-        if (bottle.isColliding(enemy) && enemy instanceof Fish && !enemy.isDying) {
+        if (bottle.isColliding(enemy) && enemy instanceof DestructibleEnemy && !enemy.isDying) {
           enemy.die();
           this.throwableObject.splice(bottleIndex, 1);
         }
@@ -128,7 +128,7 @@ class World {
   }
   
   checkEnemySlapCollision(enemy, slapX) {
-    if (enemy instanceof Fish) {
+    if (enemy instanceof DestructibleEnemy) {
       if (this.isInSlapRange(enemy, slapX)) {
         enemy.die();
       }
@@ -154,7 +154,7 @@ class World {
   cleanupDeadFish() {
     for (let i = this.level.enemies.length - 1; i >= 0; i--) {
       const enemy = this.level.enemies[i];
-      if (enemy instanceof Fish && enemy.deathAnimationComplete) {
+      if (enemy instanceof DestructibleEnemy && enemy.deathAnimationComplete) {
         this.level.enemies.splice(i, 1);
       }
     }
@@ -316,13 +316,11 @@ class World {
   showGameOverScreen() {
     // Insert template into DOM
     document.body.insertAdjacentHTML('beforeend', getGameOverTemplate());
-    
     // Add event listeners
     document.getElementById('retry_button').addEventListener('click', () => {
       document.getElementById('game_over_screen').remove();
       init();
     });
-    
     document.getElementById('menu_button').addEventListener('click', () => {
       document.getElementById('game_over_screen').remove();
       goBackToStartscreen();

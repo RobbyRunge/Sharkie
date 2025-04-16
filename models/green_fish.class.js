@@ -1,12 +1,9 @@
-class Fish extends MoveableObject {
+class GreenFish extends DestructibleEnemy {
   // Enemy fish with swimming animation
   width = 80;
   x = 0;
   height = 80;
   y = 200;
-  isDying = false;
-  currentDeadFrame = 0;
-  deathAnimationComplete = false;
   
   IMAGES_SWIMMING = [
     // Swimming animation frames
@@ -29,7 +26,8 @@ class Fish extends MoveableObject {
 
   constructor() {
     // Initialize with random position and speed
-    super().loadImage(this.IMAGES_SWIMMING[0]);
+    super();
+    this.loadImage(this.IMAGES_SWIMMING[0]);
     this.x = 200 + Math.random() * 500;
     this.y = 0 + Math.random() * 410;
     this.speed = 0.15 + Math.random() * 0.5;
@@ -41,21 +39,10 @@ class Fish extends MoveableObject {
     this.loadImages(this.IMAGES_SWIMMING);
     this.loadImages(this.IMAGES_DEAD);
     this.animate();
-  };
+  }
 
   animate() {
-    // Store the movement interval ID
-    this.startMoving();
-    // Animation interval
     this.startAnimation();
-  };
-
-  startMoving() {
-    this.movingInterval = setStoppableInterval(() => {
-      if (isGameActive && !this.isDying) {
-        this.x -= this.speed;
-      }
-    }, 1000 / 60);
   }
 
   startAnimation() {
@@ -68,20 +55,5 @@ class Fish extends MoveableObject {
         }
       }
     }, 120);
-  }
-
-  playDeathAnimation() {
-    if (this.currentDeadFrame < this.IMAGES_DEAD.length) {
-      this.img = this.imageCache[this.IMAGES_DEAD[this.currentDeadFrame]];
-      this.currentDeadFrame++;
-    } else if (!this.deathAnimationComplete) {
-      this.deathAnimationComplete = true;
-    }
-  }
-
-  die() {
-    this.isDying = true;
-    this.currentDeadFrame = 0;
-    this.deathAnimationComplete = false;
   }
 }

@@ -33,7 +33,7 @@ class DrawableObject {
   }
 
   drawFrame(ctx, x = this.x, y = this.y) {
-    if (this instanceof Character || this instanceof Fish || this instanceof Endboss) {
+    if (this instanceof Character || this instanceof GreenFish || this instanceof OrangeFish || this instanceof Endboss) {
       const leftOffset = this.offsetLeft || this.offsetX;
       const rightOffset = this.offsetRight || this.offsetX;
       const topOffset = this.offsetTop || this.offsetY;
