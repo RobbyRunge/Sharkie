@@ -1,8 +1,8 @@
 class GreenFish extends DestructibleEnemy {
   // Enemy fish with swimming animation
-  width = 80;
+  width = 60;
   x = 0;
-  height = 80;
+  height = 60;
   y = 200;
   
   IMAGES_SWIMMING = [
