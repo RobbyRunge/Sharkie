@@ -39,7 +39,7 @@
     <button id="close_overlay_btn" class="menu_button d_none" onclick="closeOverlay()">CLOSE</button>
   </div>
 
-  <div id="start_screen" class="start_screen"> <!-- delete d_none before finish -->
+  <div id="start_screen" class="start_screen d_none"> <!-- delete d_none before finish -->
     <div class="menu">
       <h1>SHARKIE</h1>
       <button class="menu_button" onclick="startGame(), init()">START GAME</button>
@@ -75,9 +75,12 @@
   </div>
 
   <div id="game_container">
-    <div class="button_position_container">
-      <button class="button_style_canvas" onclick="goBackToStartscreen()">STARTSCREEN</button>
-      <button class="button_style_canvas" onclick="handleFullscreen()">FULLSCREEN</button>
+    <div class="img_position_container">
+      <img class="img_size" src="./img/assets/skip-back-svgrepo-com.svg" alt="back to start" onclick="goBackToStartscreen()">
+      <div class="sound_and_fullscreen_position">
+        <img class="img_size fullscreen_content" src="./img/assets/fullscreen-svgrepo-com.svg" alt="fullscreen on/off" onclick="handleFullscreen()">
+        <img src="./img/assets/sound-off-svgrepo-com.svg" alt="sound on/off" id="sound_icon" class="img_size sound_content">
+      </div>
     </div>
 
     <canvas id="canvas" width="720" height="480"></canvas>

@@ -167,39 +167,54 @@ ul {
   color: white;
 }
 
-.button_position_container {
+.img_position_container {
   position: absolute;
-  top: 21%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 722px;
-  height: 24px;
+  bottom: 24%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 720px; /* Match your canvas width */
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  z-index: 10; /* Ensure it stays above canvas */
 }
 
-.button_style_canvas {
-  padding: 6px 12px 6px 12px;
-  font-size: 16px;
+.sound_and_fullscreen_position {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.img_size {
+  width: 24px;
+  height: 24px;
   cursor: pointer;
-  background-color: lightblue;
-  border: none;
-  border-radius: 24px;
-  transition: 125ms ease-in-out;  
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 3px;
 }
 
-.button_style_canvas:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
-  background-color: rgb(75, 75, 255);
-  color: white;
+.img_size:hover {
+  transform: scale(1.1);
+  transition: 125ms ease-in-out;
 }
 
-#game_container:fullscreen .button_position_container {
-  width: 90%;
-  top: 2.5%
+#game_container:fullscreen .img_position_container {
+  bottom: 6%;
+  max-width: 90%;
+}
+
+#game_container:fullscreen .fullscreen_content {
+  content: url('./img/assets/fullscreen-exit-svgrepo-com.svg');
+}
+
+#game_container:fullscreen .img_size {
+  width: 32px;
+  height: 32px;
 }
 
 #game_over_screen {
