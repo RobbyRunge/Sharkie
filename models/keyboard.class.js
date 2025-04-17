@@ -6,4 +6,5 @@ class Keyboard {
   DOWN = false;
   SPACE = false;
   D = false;
+  E = false; // speed boost
 }

@@ -40,7 +40,8 @@ class World {
       this.checkSlapping();
       this.checkThrowableCollisions(); 
       this.checkSlapCollisions();
-      this.cleanupDeadFish(); // Add this line to clean up dead fish
+      this.checkSpeedBoost(); // Add this
+      this.cleanupDeadFish();
     }, 100);
   }
 
@@ -178,12 +179,10 @@ class World {
     // Determine hit type and damage based on enemy
     let hitType = 'poison'; 
     let damage = 5; // Default damage
-    
     if (enemy instanceof GreenJellyFish || enemy instanceof PinkJellyFish) {
       hitType = 'electric';
       damage = 15; // Higher damage for electric jellyfish
     }
-    
     this.character.hit(hitType, damage);
     this.statusBar.setPercentage(this.character.energy);
   }
@@ -334,5 +333,14 @@ class World {
       document.getElementById('game_over_screen').remove();
       goBackToStartscreen();
     });
+  }
+
+  // Add this new method
+  checkSpeedBoost() {
+    if (this.keyboard.E) {
+      this.character.multiplySpeedByCollectCoins();
+      // Reset immediately to prevent multiple activations from one press
+      this.keyboard.E = false;
+    }
   }
 }

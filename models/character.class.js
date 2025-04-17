@@ -12,6 +12,7 @@ class Character extends MoveableObject {
   coins = 0;
   maxCoins = 5;
   animation; // Instance of CharacterAnimation
+  speedBoostActive = false; // Track if speed boost is active
 
   constructor() {
     super();
@@ -126,6 +127,48 @@ class Character extends MoveableObject {
       return true;
     }
     return false;
+  }
+
+  multiplySpeedByCollectCoins() {
+    if (this.canActivateSpeedBoost()) {
+      this.activateSpeedBoost();
+      this.scheduleSpeedBoostReset();
+      return true;
+    }
+    return false;
+  }
+  
+  canActivateSpeedBoost() {
+    return !this.speedBoostActive && this.coins > 0;
+  }
+  
+  activateSpeedBoost() {
+    this.speedBoostActive = true;
+    this.originalSpeed = this.speed;
+    this.originalAnimationSpeeds = {...this.animation.animationSpeed};
+    this.speed *= 1.5;
+    this.higherAnimationSpeed();
+    this.coins--;
+    if (this.world) {
+      this.world.updateCoinBar();
+    }
+  }
+  
+  scheduleSpeedBoostReset() {
+    setTimeout(() => {
+      this.resetSpeedBoost();
+    }, 5000);
+  }
+  
+  resetSpeedBoost() {
+    this.speed = this.originalSpeed;
+    this.animation.animationSpeed = this.originalAnimationSpeeds;
+    this.speedBoostActive = false;
+  }
+  
+  higherAnimationSpeed() {
+    this.animation.animationSpeed.swimming = 50;  // Was 100
+    this.animation.animationSpeed.slapping = 15; // Was 70
   }
   
   useBottle() {

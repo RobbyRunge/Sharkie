@@ -122,8 +122,6 @@ class CharacterAnimation {
   shootingProcessed = false;
   currentDeadFrame = 0;
   deathAnimationComplete = false;
-
-  // Animation timing
   animationSpeed = {
     swimming: 100,
     standing: 150,
@@ -149,7 +147,6 @@ class CharacterAnimation {
   }
 
   loadAllImages() {
-    // Load all character images
     this.character.loadImage(this.IMAGES_STAND[0]);
     this.character.loadImages(this.IMAGES_STAND);
     this.character.loadImages(this.IMAGES_SWIMMING);
@@ -162,7 +159,6 @@ class CharacterAnimation {
   }
 
   animate() {
-    // Initialize animation system
     this.setupAnimationLoop();
   }
 
@@ -170,7 +166,6 @@ class CharacterAnimation {
     setStoppableInterval(() => {
       if (!isGameActive) return;
       const now = new Date().getTime();
-      
       if (this.character.isDead()) {
         this.handleDeadAnimation();
       } else if (this.isHit) {

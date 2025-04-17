@@ -40,6 +40,9 @@ window.addEventListener('keydown', (event => {
   if(event.code == 'KeyD') {
     keyboard.D = true;
   }
+  if(event.code == 'KeyE') {
+    keyboard.E = true;
+  }
 }));
 
 // Event listeners for keyup events - set corresponding keyboard properties to false
@@ -61,5 +64,8 @@ window.addEventListener('keyup', (event => {
   }
   if (event.code == 'KeyD') {
     keyboard.D = false;
+  }
+  if(event.code == 'KeyE') {
+    keyboard.E = false;
   }
 }));
