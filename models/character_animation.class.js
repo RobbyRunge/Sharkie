@@ -183,8 +183,6 @@ class CharacterAnimation {
   }
 
   handleDeadAnimation() {
-    this.character.speed = 0; // Stop character movement
-    this.character.otherDirection = false; // Reset direction - FIXED
     if (this.currentDeadFrame < this.IMAGES_DEAD.length) {
       this.character.img = this.character.imageCache[this.IMAGES_DEAD[this.currentDeadFrame]];
       this.currentDeadFrame++;
