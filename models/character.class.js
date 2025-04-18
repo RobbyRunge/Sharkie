@@ -56,6 +56,7 @@ class Character extends MoveableObject {
   }
 
   handleHorizontalMovement() {
+    if (this.isDead()) return; // Don't allow movement when dead
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
     }
@@ -66,15 +67,20 @@ class Character extends MoveableObject {
 
   moveRight() {
     this.x += this.speed;
-    this.otherDirection = false;
+    if (!this.isDead()) { // Only change direction if not dead
+      this.otherDirection = false;
+    }
   }
 
   moveLeft() {
     this.x -= this.speed;
-    this.otherDirection = true;
+    if (!this.isDead()) { // Only change direction if not dead
+      this.otherDirection = true;
+    }
   }
 
   handleVerticalMovement() {
+    if (this.isDead()) return; // Don't allow movement when dead
     if (this.world.keyboard.UP && this.y > -90) {
       this.moveUp();
     }
