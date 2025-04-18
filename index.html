@@ -83,6 +83,17 @@
       </div>
     </div>
 
+    <div class="control_container d_none">
+      <div class="img_positiom_control_container">
+        <img src="./img/assets/speed.png" alt="speed boost" class="img_size_control" 
+             onclick="world.character.multiplySpeedByCollectCoins()">
+        <img src="./img/assets/posion.png" alt="throw posion" class="img_size_control" 
+             onclick="world.character.startShooting()">
+        <img src="./img/assets/shark.png" alt="fin slap" class="img_size_control" 
+             onclick="world.character.startSlapping()">
+      </div>
+    </div>
+
     <canvas id="canvas" width="720" height="480"></canvas>
   </div>
 </body>

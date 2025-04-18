@@ -239,6 +239,50 @@ ul {
   margin-top: 20px;
 }
 
+@media only screen and (max-width: 1300px) {
+  .img_position_container {
+    justify-content: flex-end;
+    gap: 10px;
+    top: -23%;
+    bottom: none;
+  }
+
+  #game_container:fullscreen .img_position_container {
+    top: -78%;
+    bottom: none;
+  }
+
+  .control_container {
+    position: absolute;
+    bottom: 25%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 720px; /* Match your canvas width */
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .img_positiom_control_container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .img_size_control {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 3px;
+  }
+}
+
 @media only screen and (max-width: 720px) {
   canvas {
     width: 100%;
